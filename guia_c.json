@@ -1,0 +1,2130 @@
+[
+ {
+  "h": "stdio",
+  "g": "E/S y utilidades",
+  "sub": "Referencia de funciones de entrada/salida estándar en C",
+  "fns": [
+   {
+    "name": "printf",
+    "catLabel": "E/S con Formato",
+    "desc": "Salida formateada a stdout",
+    "fullDesc": "Imprime una cadena con formato en la salida estándar (normalmente la consola). Permite usar especificadores como %d, %s, %f, etc.",
+    "proto": "int printf(const char *format, ...);",
+    "example": "#include <stdio.h>\n\nint main() {\n    int edad = 25;\n    printf(\"Tengo %d años.\\n\", edad);\n    return 0;\n}"
+   },
+   {
+    "name": "scanf",
+    "catLabel": "E/S con Formato",
+    "desc": "Entrada formateada desde stdin",
+    "fullDesc": "Lee datos desde la entrada estándar y los almacena en las variables proporcionadas según el formato especificado.",
+    "proto": "int scanf(const char *format, ...);",
+    "example": "#include <stdio.h>\n\nint main() {\n    int num;\n    printf(\"Ingresa un número: \");\n    scanf(\"%d\", &num);\n    printf(\"Ingresaste: %d\\n\", num);\n    return 0;\n}"
+   },
+   {
+    "name": "fprintf",
+    "catLabel": "E/S con Formato",
+    "desc": "Salida formateada a un archivo",
+    "fullDesc": "Escribe una cadena con formato en el flujo de archivo especificado (FILE *).",
+    "proto": "int fprintf(FILE *stream, const char *format, ...);",
+    "example": "#include <stdio.h>\n\nint main() {\n    FILE *f = fopen(\"log.txt\", \"w\");\n    if (f) {\n        fprintf(f, \"Error detectado a las %d:00\\n\", 10);\n        fclose(f);\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "fscanf",
+    "catLabel": "E/S con Formato",
+    "desc": "Entrada formateada desde un archivo",
+    "fullDesc": "Lee datos desde un flujo de archivo según el formato especificado.",
+    "proto": "int fscanf(FILE *stream, const char *format, ...);",
+    "example": "#include <stdio.h>\n\nint main() {\n    int val;\n    FILE *f = fopen(\"data.txt\", \"r\");\n    if (f) {\n        fscanf(f, \"%d\", &val);\n        fclose(f);\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "sprintf",
+    "catLabel": "E/S con Formato",
+    "desc": "Salida formateada a una cadena",
+    "fullDesc": "Escribe datos formateados en un buffer de caracteres (cadena) en lugar de un archivo o consola.",
+    "proto": "int sprintf(char *str, const char *format, ...);",
+    "example": "#include <stdio.h>\n\nint main() {\n    char buffer[50];\n    sprintf(buffer, \"Pi es aproximadamente %.2f\", 3.14159);\n    printf(\"%s\\n\", buffer);\n    return 0;\n}"
+   },
+   {
+    "name": "sscanf",
+    "catLabel": "E/S con Formato",
+    "desc": "Entrada formateada desde una cadena",
+    "fullDesc": "Lee datos desde una cadena de caracteres según el formato especificado.",
+    "proto": "int sscanf(const char *str, const char *format, ...);",
+    "example": "#include <stdio.h>\n\nint main() {\n    const char *data = \"10 20\";\n    int a, b;\n    sscanf(data, \"%d %d\", &a, &b);\n    printf(\"Suma: %d\\n\", a + b);\n    return 0;\n}"
+   },
+   {
+    "name": "fopen",
+    "catLabel": "Archivos",
+    "desc": "Abre un archivo",
+    "fullDesc": "Abre el archivo cuyo nombre es la cadena apuntada por filename y lo asocia a un flujo. El modo puede ser \"r\" (lectura), \"w\" (escritura), \"a\" (añadir), etc.",
+    "proto": "FILE *fopen(const char *filename, const char *mode);",
+    "example": "#include <stdio.h>\n\nint main() {\n    FILE *f = fopen(\"test.txt\", \"w\");\n    if (f == NULL) return 1;\n    fputs(\"Hola Mundo\", f);\n    fclose(f);\n    return 0;\n}"
+   },
+   {
+    "name": "fclose",
+    "catLabel": "Archivos",
+    "desc": "Cierra un archivo",
+    "fullDesc": "Cierra el flujo asociado al archivo. Vuelca cualquier dato pendiente en el buffer al archivo.",
+    "proto": "int fclose(FILE *stream);",
+    "example": "#include <stdio.h>\n\nint main() {\n    FILE *f = fopen(\"archivo.txt\", \"r\");\n    if (f) fclose(f);\n    return 0;\n}"
+   },
+   {
+    "name": "fflush",
+    "catLabel": "Archivos",
+    "desc": "Limpia el buffer de un flujo",
+    "fullDesc": "Para flujos de salida, escribe cualquier dato almacenado en el buffer al archivo subyacente. Para flujos de entrada, el comportamiento depende de la implementación.",
+    "proto": "int fflush(FILE *stream);",
+    "example": "#include <stdio.h>\n\nint main() {\n    printf(\"Escribiendo...\");\n    fflush(stdout);\n    return 0;\n}"
+   },
+   {
+    "name": "remove",
+    "catLabel": "Archivos",
+    "desc": "Elimina un archivo",
+    "fullDesc": "Elimina el archivo especificado por su nombre.",
+    "proto": "int remove(const char *filename);",
+    "example": "#include <stdio.h>\n\nint main() {\n    if (remove(\"temp.txt\") == 0)\n        printf(\"Eliminado correctamente\\n\");\n    return 0;\n}"
+   },
+   {
+    "name": "rename",
+    "catLabel": "Archivos",
+    "desc": "Renombra un archivo",
+    "fullDesc": "Cambia el nombre de un archivo o directorio de oldname a newname.",
+    "proto": "int rename(const char *oldname, const char *newname);",
+    "example": "#include <stdio.h>\n\nint main() {\n    rename(\"viejo.txt\", \"nuevo.txt\");\n    return 0;\n}"
+   },
+   {
+    "name": "tmpfile",
+    "catLabel": "Archivos",
+    "desc": "Crea un archivo temporal",
+    "fullDesc": "Crea un archivo temporal en modo binario de actualización (\"wb+\"). El archivo se elimina automáticamente cuando se cierra o termina el programa.",
+    "proto": "FILE *tmpfile(void);",
+    "example": "#include <stdio.h>\n\nint main() {\n    FILE *tmp = tmpfile();\n    if (tmp) fclose(tmp);\n    return 0;\n}"
+   },
+   {
+    "name": "fseek",
+    "catLabel": "Archivos",
+    "desc": "Mueve el puntero del archivo",
+    "fullDesc": "Establece la posición del puntero de archivo para el flujo especificado. El origen puede ser SEEK_SET, SEEK_CUR o SEEK_END.",
+    "proto": "int fseek(FILE *stream, long int offset, int whence);",
+    "example": "#include <stdio.h>\n\nint main() {\n    FILE *f = fopen(\"data.bin\", \"rb\");\n    if (f) {\n        fseek(f, 10, SEEK_SET);\n        fclose(f);\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "ftell",
+    "catLabel": "Archivos",
+    "desc": "Obtiene posición actual en el archivo",
+    "fullDesc": "Devuelve el valor actual del indicador de posición del flujo.",
+    "proto": "long int ftell(FILE *stream);",
+    "example": "#include <stdio.h>\n\nint main() {\n    FILE *f = fopen(\"test.txt\", \"r\");\n    if (f) {\n        fseek(f, 0, SEEK_END);\n        printf(\"Tamaño: %ld bytes\\n\", ftell(f));\n        fclose(f);\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "rewind",
+    "catLabel": "Archivos",
+    "desc": "Reinicia el puntero del archivo",
+    "fullDesc": "Coloca el indicador de posición de archivo al comienzo del archivo. Equivale a (void)fseek(stream, 0L, SEEK_SET).",
+    "proto": "void rewind(FILE *stream);",
+    "example": "#include <stdio.h>\n\nint main() {\n    FILE *f = fopen(\"test.txt\", \"r\");\n    if (f) {\n        // leer algo\n        rewind(f);\n        // leer desde el inicio otra vez\n        fclose(f);\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "perror",
+    "catLabel": "Archivos",
+    "desc": "Imprime mensaje de error",
+    "fullDesc": "Produce un mensaje en stderr que describe el último error ocurrido durante una llamada a la biblioteca estándar.",
+    "proto": "void perror(const char *s);",
+    "example": "#include <stdio.h>\n\nint main() {\n    FILE *f = fopen(\"inexistente.txt\", \"r\");\n    if (!f) perror(\"Error al abrir\");\n    return 0;\n}"
+   },
+   {
+    "name": "setvbuf",
+    "catLabel": "Archivos",
+    "desc": "Control de buffering",
+    "fullDesc": "Define el modo de buffering para un flujo. Los modos pueden ser _IOFBF (total), _IOLBF (línea) o _IONBF (ninguno).",
+    "proto": "int setvbuf(FILE *stream, char *buf, int mode, size_t size);",
+    "example": "#include <stdio.h>\n\nint main() {\n    setvbuf(stdout, NULL, _IONBF, 0);\n    printf(\"Salida inmediata\");\n    return 0;\n}"
+   },
+   {
+    "name": "fgetc",
+    "catLabel": "E/S de Caracteres",
+    "desc": "Lee un carácter de un archivo",
+    "fullDesc": "Obtiene el siguiente carácter del flujo especificado y avanza el indicador de posición.",
+    "proto": "int fgetc(FILE *stream);",
+    "example": "#include <stdio.h>\n\nint main() {\n    FILE *f = fopen(\"test.txt\", \"r\");\n    if (f) {\n        int c = fgetc(f);\n        if (c != EOF) printf(\"Leído: %c\\n\", c);\n        fclose(f);\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "fputc",
+    "catLabel": "E/S de Caracteres",
+    "desc": "Escribe un carácter en un archivo",
+    "fullDesc": "Escribe el carácter c en el flujo especificado.",
+    "proto": "int fputc(int c, FILE *stream);",
+    "example": "#include <stdio.h>\n\nint main() {\n    fputc('A', stdout);\n    return 0;\n}"
+   },
+   {
+    "name": "fgets",
+    "catLabel": "E/S de Caracteres",
+    "desc": "Lee una cadena de un archivo",
+    "fullDesc": "Lee caracteres del flujo y los almacena en str hasta que se han leído (n-1) caracteres, se encuentra un salto de línea o el final del archivo.",
+    "proto": "char *fgets(char *str, int n, FILE *stream);",
+    "example": "#include <stdio.h>\n\nint main() {\n    char buffer[100];\n    if (fgets(buffer, 100, stdin))\n        printf(\"Leíste: %s\", buffer);\n    return 0;\n}"
+   },
+   {
+    "name": "fputs",
+    "catLabel": "E/S de Caracteres",
+    "desc": "Escribe una cadena en un archivo",
+    "fullDesc": "Escribe la cadena str en el flujo especificado. No añade automáticamente un carácter de nueva línea.",
+    "proto": "int fputs(const char *str, FILE *stream);",
+    "example": "#include <stdio.h>\n\nint main() {\n    fputs(\"Hola Mundo\\n\", stdout);\n    return 0;\n}"
+   },
+   {
+    "name": "getchar",
+    "catLabel": "E/S de Caracteres",
+    "desc": "Lee un carácter de stdin",
+    "fullDesc": "Equivale a fgetc(stdin). Lee el siguiente carácter de la entrada estándar.",
+    "proto": "int getchar(void);",
+    "example": "#include <stdio.h>\n\nint main() {\n    printf(\"Presiona una tecla... \");\n    int c = getchar();\n    printf(\"\\nTecleaste: %c\\n\", c);\n    return 0;\n}"
+   },
+   {
+    "name": "putchar",
+    "catLabel": "E/S de Caracteres",
+    "desc": "Escribe un carácter en stdout",
+    "fullDesc": "Equivale a fputc(c, stdout). Escribe el carácter en la salida estándar.",
+    "proto": "int putchar(int c);",
+    "example": "#include <stdio.h>\n\nint main() {\n    putchar('X');\n    putchar('\\n');\n    return 0;\n}"
+   },
+   {
+    "name": "fread",
+    "catLabel": "E/S de Bloques",
+    "desc": "Lee bloques de datos de un archivo",
+    "fullDesc": "Lee nmemb elementos de datos, cada uno de size bytes, del flujo especificado al bloque de memoria apuntado por ptr.",
+    "proto": "size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream);",
+    "example": "#include <stdio.h>\n\nint main() {\n    int numeros[10];\n    FILE *f = fopen(\"data.bin\", \"rb\");\n    if (f) {\n        fread(numeros, sizeof(int), 10, f);\n        fclose(f);\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "fwrite",
+    "catLabel": "E/S de Bloques",
+    "desc": "Escribe bloques de datos en un archivo",
+    "fullDesc": "Escribe nmemb elementos de datos en el flujo desde el bloque de memoria apuntado por ptr.",
+    "proto": "size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream);",
+    "example": "#include <stdio.h>\n\nint main() {\n    int datos[] = {1, 2, 3};\n    FILE *f = fopen(\"salida.bin\", \"wb\");\n    if (f) {\n        fwrite(datos, sizeof(int), 3, f);\n        fclose(f);\n    }\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "stdlib",
+  "g": "E/S y utilidades",
+  "sub": "Referencia completa de funciones de la biblioteca estándar de C",
+  "fns": [
+   {
+    "name": "atof",
+    "catLabel": "Conversión",
+    "desc": "Convierte una cadena a double",
+    "fullDesc": "Analiza una cadena de caracteres y la convierte en un número de punto flotante de tipo double. Ignora espacios iniciales y se detiene en el primer carácter no numérico.",
+    "proto": "double atof(const char *str);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    const char *str = \"3.14159 es pi\";\n    double valor = atof(str);\n    printf(\"Valor: %f\\n\", valor);\n    return 0;\n}"
+   },
+   {
+    "name": "atoi",
+    "catLabel": "Conversión",
+    "desc": "Convierte una cadena a int",
+    "fullDesc": "Convierte la parte inicial de una cadena a un entero. No detecta errores de desbordamiento; para validación robusta usa strtol.",
+    "proto": "int atoi(const char *str);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    const char *edad = \"42\";\n    int n = atoi(edad);\n    printf(\"Edad: %d\\n\", n);\n    return 0;\n}"
+   },
+   {
+    "name": "atol",
+    "catLabel": "Conversión",
+    "desc": "Convierte una cadena a long int",
+    "fullDesc": "Similar a atoi pero devuelve long int, útil para números más grandes que el rango de int.",
+    "proto": "long int atol(const char *str);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    const char *str = \"2147483648\";\n    long valor = atol(str);\n    printf(\"Long: %ld\\n\", valor);\n    return 0;\n}"
+   },
+   {
+    "name": "strtod",
+    "catLabel": "Conversión",
+    "desc": "Convierte cadena a double con puntero de error",
+    "fullDesc": "Versión robusta de atof. Recibe un puntero endptr que apunta al primer carácter no convertido, permitiendo detectar conversiones parciales o fallidas.",
+    "proto": "double strtod(const char *str, char **endptr);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    char *end;\n    const char *entrada = \"1.25e3 xyz\";\n    double v = strtod(entrada, &end);\n    printf(\"Valor: %g, resto: '%s'\\n\", v, end);\n    return 0;\n}"
+   },
+   {
+    "name": "strtol",
+    "catLabel": "Conversión",
+    "desc": "Convierte cadena a long con base configurable",
+    "fullDesc": "Convierte una cadena a long int permitiendo especificar la base (2 a 36, o 0 para detección automática). Es la forma recomendada frente a atoi cuando se necesita validación.",
+    "proto": "long int strtol(const char *str, char **endptr, int base);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    char *end;\n    long hex = strtol(\"0xFF\", &end, 16);\n    long dec = strtol(\"255abc\", &end, 10);\n    printf(\"Hex: %ld, Dec: %ld\\n\", hex, dec);\n    return 0;\n}"
+   },
+   {
+    "name": "malloc",
+    "catLabel": "Memoria",
+    "desc": "Reserva memoria dinámica sin inicializar",
+    "fullDesc": "Asigna un bloque de memoria de size bytes en el heap. El contenido queda sin inicializar. Devuelve NULL si la asignación falla.",
+    "proto": "void *malloc(size_t size);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int *v = malloc(5 * sizeof(int));\n    if (v == NULL) return 1;\n    for (int i = 0; i < 5; i++) v[i] = i * i;\n    for (int i = 0; i < 5; i++) printf(\"%d \", v[i]);\n    free(v);\n    return 0;\n}"
+   },
+   {
+    "name": "calloc",
+    "catLabel": "Memoria",
+    "desc": "Reserva memoria inicializada a cero",
+    "fullDesc": "Asigna un bloque para nmemb elementos de size bytes cada uno, inicializando todo a cero. Ideal para arrays que requieren estado limpio.",
+    "proto": "void *calloc(size_t nmemb, size_t size);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int *contador = calloc(10, sizeof(int));\n    if (!contador) return 1;\n    printf(\"Primer valor: %d\\n\", contador[0]);\n    free(contador);\n    return 0;\n}"
+   },
+   {
+    "name": "realloc",
+    "catLabel": "Memoria",
+    "desc": "Redimensiona un bloque previamente reservado",
+    "fullDesc": "Cambia el tamaño de un bloque de memoria. Puede mover el bloque a otra ubicación, por lo que siempre se debe asignar el resultado a un puntero temporal antes de sobrescribir el original.",
+    "proto": "void *realloc(void *ptr, size_t size);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int *v = malloc(3 * sizeof(int));\n    int *tmp = realloc(v, 6 * sizeof(int));\n    if (!tmp) { free(v); return 1; }\n    v = tmp;\n    v[5] = 99;\n    printf(\"v[5] = %d\\n\", v[5]);\n    free(v);\n    return 0;\n}"
+   },
+   {
+    "name": "free",
+    "catLabel": "Memoria",
+    "desc": "Libera memoria reservada dinámicamente",
+    "fullDesc": "Libera el bloque apuntado por ptr, devolviéndolo al sistema. Llamar free sobre un puntero ya liberado o no asignado por malloc/calloc/realloc es comportamiento indefinido.",
+    "proto": "void free(void *ptr);",
+    "example": "#include <stdlib.h>\n\nint main(void) {\n    char *buffer = malloc(256);\n    if (!buffer) return 1;\n    // usar buffer\n    free(buffer);\n    buffer = NULL;\n    return 0;\n}"
+   },
+   {
+    "name": "rand",
+    "catLabel": "Aleatorios",
+    "desc": "Genera un número pseudoaleatorio",
+    "fullDesc": "Devuelve un entero pseudoaleatorio entre 0 y RAND_MAX. La secuencia es determinista y depende de la semilla establecida con srand.",
+    "proto": "int rand(void);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    for (int i = 0; i < 3; i++) {\n        int dado = rand() % 6 + 1;\n        printf(\"Dado: %d\\n\", dado);\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "srand",
+    "catLabel": "Aleatorios",
+    "desc": "Inicializa la semilla del generador",
+    "fullDesc": "Establece el valor inicial de la secuencia pseudoaleatoria. Usar time(NULL) como semilla produce secuencias distintas en cada ejecución.",
+    "proto": "void srand(unsigned int seed);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n#include <time.h>\n\nint main(void) {\n    srand((unsigned)time(NULL));\n    printf(\"Aleatorio: %d\\n\", rand());\n    return 0;\n}"
+   },
+   {
+    "name": "qsort",
+    "catLabel": "Ordenación",
+    "desc": "Ordena un array con quicksort",
+    "fullDesc": "Ordena un array genérico usando una función de comparación proporcionada por el usuario. El comparador debe devolver negativo, cero o positivo.",
+    "proto": "void qsort(void *base, size_t nmemb, size_t size,\n           int (*compar)(const void *, const void *));",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint cmp(const void *a, const void *b) {\n    return (*(int*)a - *(int*)b);\n}\n\nint main(void) {\n    int v[] = {5, 2, 8, 1, 9, 3};\n    qsort(v, 6, sizeof(int), cmp);\n    for (int i = 0; i < 6; i++) printf(\"%d \", v[i]);\n    return 0;\n}"
+   },
+   {
+    "name": "bsearch",
+    "catLabel": "Ordenación",
+    "desc": "Búsqueda binaria en array ordenado",
+    "fullDesc": "Busca un elemento en un array previamente ordenado. Devuelve un puntero al elemento encontrado o NULL. Requiere la misma función de comparación que qsort.",
+    "proto": "void *bsearch(const void *key, const void *base,\n              size_t nmemb, size_t size,\n              int (*compar)(const void *, const void *));",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint cmp(const void *a, const void *b) {\n    return (*(int*)a - *(int*)b);\n}\n\nint main(void) {\n    int v[] = {1, 3, 5, 7, 9, 11};\n    int clave = 7;\n    int *r = bsearch(&clave, v, 6, sizeof(int), cmp);\n    if (r) printf(\"Encontrado: %d\\n\", *r);\n    return 0;\n}"
+   },
+   {
+    "name": "abs",
+    "catLabel": "Matemáticas",
+    "desc": "Valor absoluto de un int",
+    "fullDesc": "Devuelve el valor absoluto de un entero de tipo int. Para long usa labs, y para double usa fabs de math.h.",
+    "proto": "int abs(int n);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int diferencia = -42;\n    printf(\"|%d| = %d\\n\", diferencia, abs(diferencia));\n    return 0;\n}"
+   },
+   {
+    "name": "labs",
+    "catLabel": "Matemáticas",
+    "desc": "Valor absoluto de un long int",
+    "fullDesc": "Equivalente a abs pero opera sobre long int, útil para valores fuera del rango de int.",
+    "proto": "long int labs(long int n);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    long n = -3000000000L;\n    printf(\"|%ld| = %ld\\n\", n, labs(n));\n    return 0;\n}"
+   },
+   {
+    "name": "div",
+    "catLabel": "Matemáticas",
+    "desc": "División entera con cociente y resto",
+    "fullDesc": "Realiza una división entera devolviendo una estructura div_t con los campos quot (cociente) y rem (resto) en una sola operación.",
+    "proto": "div_t div(int numer, int denom);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    div_t r = div(17, 5);\n    printf(\"17 / 5 = %d, resto %d\\n\", r.quot, r.rem);\n    return 0;\n}"
+   },
+   {
+    "name": "atexit",
+    "catLabel": "Procesos",
+    "desc": "Registra función a ejecutar al salir",
+    "fullDesc": "Registra una función que se invocará automáticamente cuando el programa termine normalmente (vía exit o return de main). Se pueden registrar hasta 32 funciones y se ejecutan en orden inverso.",
+    "proto": "int atexit(void (*func)(void));",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nvoid limpieza(void) {\n    printf(\"Liberando recursos...\\n\");\n}\n\nint main(void) {\n    atexit(limpieza);\n    printf(\"Programa ejecutándose\\n\");\n    return 0;\n}"
+   },
+   {
+    "name": "exit",
+    "catLabel": "Procesos",
+    "desc": "Termina el programa inmediatamente",
+    "fullDesc": "Finaliza la ejecución del programa ejecutando todas las funciones registradas con atexit y cerrando los streams abiertos. Use EXIT_SUCCESS o EXIT_FAILURE como status.",
+    "proto": "void exit(int status);",
+    "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    FILE *f = fopen(\"datos.txt\", \"r\");\n    if (!f) {\n        fprintf(stderr, \"Error abriendo archivo\\n\");\n        exit(EXIT_FAILURE);\n    }\n    fclose(f);\n    exit(EXIT_SUCCESS);\n}"
+   }
+  ]
+ },
+ {
+  "h": "string",
+  "g": "E/S y utilidades",
+  "sub": "Manipulación de cadenas y bloques de memoria",
+  "fns": [
+   {
+    "name": "memcpy",
+    "catLabel": "Copiado",
+    "desc": "Copia un bloque de memoria",
+    "fullDesc": "Copia n bytes desde el área de memoria src al área dest. Las áreas no deben solaparse. Para áreas que se solapan, use memmove.",
+    "proto": "void *memcpy(void *dest, const void *src, size_t n);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char src[] = \"Hola\";\n    char dest[10];\n    memcpy(dest, src, 5);\n    printf(\"Dest: %s\\n\", dest);\n    return 0;\n}"
+   },
+   {
+    "name": "memmove",
+    "catLabel": "Copiado",
+    "desc": "Copia memoria con solapamiento seguro",
+    "fullDesc": "Copia n bytes de src a dest. A diferencia de memcpy, funciona correctamente incluso si las áreas de memoria se solapan.",
+    "proto": "void *memmove(void *dest, const void *src, size_t n);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char str[] = \"1234567890\";\n    memmove(str + 2, str, 5);\n    printf(\"Resultado: %s\\n\", str);\n    return 0;\n}"
+   },
+   {
+    "name": "strcpy",
+    "catLabel": "Copiado",
+    "desc": "Copia una cadena de caracteres",
+    "fullDesc": "Copia la cadena apuntada por src (incluyendo el carácter nulo terminador) al array apuntado por dest.",
+    "proto": "char *strcpy(char *dest, const char *src);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char origen[] = \"C99\";\n    char destino[20];\n    strcpy(destino, origen);\n    printf(\"Destino: %s\\n\", destino);\n    return 0;\n}"
+   },
+   {
+    "name": "strncpy",
+    "catLabel": "Copiado",
+    "desc": "Copia n caracteres de una cadena",
+    "fullDesc": "Copia hasta n caracteres de src a dest. Si src tiene menos de n caracteres, el resto de dest se rellena con nulos.",
+    "proto": "char *strncpy(char *dest, const char *src, size_t n);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char origen[] = \"Lenguaje C\";\n    char destino[10];\n    strncpy(destino, origen, 8);\n    destino[8] = '\\0'; // Asegurar terminación\n    printf(\"Resultado: %s\\n\", destino);\n    return 0;\n}"
+   },
+   {
+    "name": "strcat",
+    "catLabel": "Concatenación",
+    "desc": "Concatena dos cadenas",
+    "fullDesc": "Añade la cadena src al final de la cadena dest, sobrescribiendo el carácter nulo al final de dest, y añade un nuevo nulo al final.",
+    "proto": "char *strcat(char *dest, const char *src);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char saludo[20] = \"Hola \";\n    strcat(saludo, \"Mundo\");\n    printf(\"%s\\n\", saludo);\n    return 0;\n}"
+   },
+   {
+    "name": "strncat",
+    "catLabel": "Concatenación",
+    "desc": "Concatena n caracteres",
+    "fullDesc": "Añade como máximo n caracteres de la cadena src al final de dest.",
+    "proto": "char *strncat(char *dest, const char *src, size_t n);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char d[20] = \"Base-\";\n    strncat(d, \"12345\", 3);\n    printf(\"Resultado: %s\\n\", d);\n    return 0;\n}"
+   },
+   {
+    "name": "memcmp",
+    "catLabel": "Comparación",
+    "desc": "Compara bloques de memoria",
+    "fullDesc": "Compara los primeros n bytes de dos bloques de memoria. Devuelve un entero menor que, igual a, o mayor que cero.",
+    "proto": "int memcmp(const void *s1, const void *s2, size_t n);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char a[] = \"ABC\";\n    char b[] = \"ABD\";\n    if (memcmp(a, b, 3) < 0) printf(\"a es menor que b\\n\");\n    return 0;\n}"
+   },
+   {
+    "name": "strcmp",
+    "catLabel": "Comparación",
+    "desc": "Compara dos cadenas",
+    "fullDesc": "Compara lexicográficamente dos cadenas. Devuelve 0 si son iguales.",
+    "proto": "int strcmp(const char *s1, const char *s2);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    if (strcmp(\"clave\", \"clave\") == 0) {\n        printf(\"Cadenas iguales\\n\");\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "strncmp",
+    "catLabel": "Comparación",
+    "desc": "Compara n caracteres de dos cadenas",
+    "fullDesc": "Similar a strcmp pero solo compara los primeros n caracteres.",
+    "proto": "int strncmp(const char *s1, const char *s2, size_t n);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    if (strncmp(\"perro\", \"perrera\", 3) == 0) {\n        printf(\"Primeros 3 caracteres coinciden\\n\");\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "strcoll",
+    "catLabel": "Comparación",
+    "desc": "Compara cadenas usando locale",
+    "fullDesc": "Compara dos cadenas usando la configuración regional actual establecida por setlocale.",
+    "proto": "int strcoll(const char *s1, const char *s2);",
+    "example": "#include <stdio.h>\n#include <string.h>\n#include <locale.h>\n\nint main(void) {\n    setlocale(LC_COLLATE, \"es_ES.UTF-8\");\n    printf(\"%d\\n\", strcoll(\"árbol\", \"barco\"));\n    return 0;\n}"
+   },
+   {
+    "name": "strxfrm",
+    "catLabel": "Comparación",
+    "desc": "Transforma cadena para comparación",
+    "fullDesc": "Transforma src de tal manera que el resultado de strcmp sobre dos cadenas transformadas sea igual al resultado de strcoll sobre las originales.",
+    "proto": "size_t strxfrm(char *dest, const char *src, size_t n);",
+    "example": "#include <string.h>\n\nint main(void) {\n    char d[20];\n    strxfrm(d, \"México\", 20);\n    return 0;\n}"
+   },
+   {
+    "name": "memchr",
+    "catLabel": "Búsqueda",
+    "desc": "Busca un carácter en memoria",
+    "fullDesc": "Busca la primera aparición del carácter c (interpretado como unsigned char) en los primeros n bytes de s.",
+    "proto": "void *memchr(const void *s, int c, size_t n);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char m[] = \"Buscando una X aquí\";\n    char *p = memchr(m, 'X', 20);\n    if (p) printf(\"Encontrado en: %s\\n\", p);\n    return 0;\n}"
+   },
+   {
+    "name": "strchr",
+    "catLabel": "Búsqueda",
+    "desc": "Busca primera aparición de carácter",
+    "fullDesc": "Devuelve un puntero a la primera aparición del carácter c en la cadena s.",
+    "proto": "char *strchr(const char *s, int c);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[] = \"ejemplo.test\";\n    char *punto = strchr(s, '.');\n    if (punto) printf(\"Extensión: %s\\n\", punto);\n    return 0;\n}"
+   },
+   {
+    "name": "strcspn",
+    "catLabel": "Búsqueda",
+    "desc": "Longitud de segmento sin caracteres",
+    "fullDesc": "Calcula la longitud del segmento inicial de s que no contiene ninguno de los caracteres de reject.",
+    "proto": "size_t strcspn(const char *s, const char *reject);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    const char *s = \"item123\";\n    size_t n = strcspn(s, \"0123456789\");\n    printf(\"Letras antes del primer dígito: %zu\\n\", n);\n    return 0;\n}"
+   },
+   {
+    "name": "strpbrk",
+    "catLabel": "Búsqueda",
+    "desc": "Busca primer carácter de un conjunto",
+    "fullDesc": "Busca la primera aparición en s de cualquier carácter de accept.",
+    "proto": "char *strpbrk(const char *s, const char *accept);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char *s = \"hola mundo\";\n    char *v = strpbrk(s, \"aeiou\");\n    if (v) printf(\"Primera vocal: %c\\n\", *v);\n    return 0;\n}"
+   },
+   {
+    "name": "strrchr",
+    "catLabel": "Búsqueda",
+    "desc": "Busca última aparición de carácter",
+    "fullDesc": "Devuelve un puntero a la última aparición del carácter c en la cadena s.",
+    "proto": "char *strrchr(const char *s, int c);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char path[] = \"/home/user/doc.txt\";\n    char *file = strrchr(path, '/');\n    if (file) printf(\"Nombre: %s\\n\", file + 1);\n    return 0;\n}"
+   },
+   {
+    "name": "strspn",
+    "catLabel": "Búsqueda",
+    "desc": "Longitud de segmento con caracteres",
+    "fullDesc": "Calcula la longitud del segmento inicial de s que consiste únicamente en caracteres de accept.",
+    "proto": "size_t strspn(const char *s, const char *accept);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    size_t n = strspn(\"129.50\", \"0123456789\");\n    printf(\"Dígitos iniciales: %zu\\n\", n);\n    return 0;\n}"
+   },
+   {
+    "name": "strstr",
+    "catLabel": "Búsqueda",
+    "desc": "Busca una subcadena",
+    "fullDesc": "Encuentra la primera aparición de la subcadena needle en la cadena haystack.",
+    "proto": "char *strstr(const char *haystack, const char *needle);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char *p = strstr(\"Programación en C\", \"C\");\n    if (p) printf(\"Encontrado: %s\\n\", p);\n    return 0;\n}"
+   },
+   {
+    "name": "strtok",
+    "catLabel": "Búsqueda",
+    "desc": "Divide cadena en tokens",
+    "fullDesc": "Divide una cadena en una secuencia de tokens usando delimitadores. La primera llamada requiere la cadena, las siguientes NULL.",
+    "proto": "char *strtok(char *str, const char *delim);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char s[] = \"uno,dos,tres\";\n    char *t = strtok(s, \",\");\n    while (t) {\n        printf(\"%s\\n\", t);\n        t = strtok(NULL, \",\");\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "memset",
+    "catLabel": "Otros",
+    "desc": "Rellena memoria con un byte",
+    "fullDesc": "Rellena los primeros n bytes del área de memoria apuntada por s con el valor constante c.",
+    "proto": "void *memset(void *s, int c, size_t n);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    char b[10];\n    memset(b, 'A', 9);\n    b[9] = '\\0';\n    printf(\"%s\\n\", b);\n    return 0;\n}"
+   },
+   {
+    "name": "strerror",
+    "catLabel": "Otros",
+    "desc": "Cadena descriptiva de error",
+    "fullDesc": "Devuelve un puntero a una cadena que describe el código de error errnum.",
+    "proto": "char *strerror(int errnum);",
+    "example": "#include <stdio.h>\n#include <string.h>\n#include <errno.h>\n\nint main(void) {\n    printf(\"Error 2: %s\\n\", strerror(2));\n    return 0;\n}"
+   },
+   {
+    "name": "strlen",
+    "catLabel": "Otros",
+    "desc": "Longitud de una cadena",
+    "fullDesc": "Calcula la longitud de la cadena s, sin incluir el carácter nulo terminador.",
+    "proto": "size_t strlen(const char *s);",
+    "example": "#include <stdio.h>\n#include <string.h>\n\nint main(void) {\n    printf(\"Longitud: %zu\\n\", strlen(\"Hola\"));\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "time",
+  "g": "E/S y utilidades",
+  "sub": "Gestión de tiempo, fechas y reloj del sistema",
+  "fns": [
+   {
+    "name": "clock",
+    "catLabel": "Tiempo y Reloj",
+    "desc": "Tiempo de CPU consumido",
+    "fullDesc": "Devuelve el tiempo aproximado de procesador utilizado por el programa desde que comenzó su ejecución.",
+    "proto": "clock_t clock(void);",
+    "example": "#include <stdio.h>\n#include <time.h>\n\nint main(void) {\n    clock_t inicio = clock();\n    // ... operación costosa ...\n    clock_t fin = clock();\n    double seg = (double)(fin - inicio) / CLOCKS_PER_SEC;\n    printf(\"Tiempo CPU: %f segundos\\n\", seg);\n    return 0;\n}"
+   },
+   {
+    "name": "time",
+    "catLabel": "Tiempo y Reloj",
+    "desc": "Obtiene el tiempo actual del sistema",
+    "fullDesc": "Devuelve el tiempo actual del sistema como un valor de tipo time_t (segundos desde el Epoch, 00:00:00 UTC, 1 de enero de 1970).",
+    "proto": "time_t time(time_t *timer);",
+    "example": "#include <stdio.h>\n#include <time.h>\n\nint main(void) {\n    time_t ahora = time(NULL);\n    printf(\"Segundos desde 1970: %ld\\n\", (long)ahora);\n    return 0;\n}"
+   },
+   {
+    "name": "difftime",
+    "catLabel": "Tiempo y Reloj",
+    "desc": "Diferencia entre dos tiempos",
+    "fullDesc": "Calcula la diferencia en segundos entre dos valores de tiempo de tipo time_t.",
+    "proto": "double difftime(time_t time1, time_t time0);",
+    "example": "#include <stdio.h>\n#include <time.h>\n\nint main(void) {\n    time_t t1 = time(NULL);\n    // ... esperar ...\n    time_t t2 = time(NULL);\n    printf(\"Diferencia: %.2f s\\n\", difftime(t2, t1));\n    return 0;\n}"
+   },
+   {
+    "name": "mktime",
+    "catLabel": "Tiempo y Reloj",
+    "desc": "Convierte struct tm a time_t",
+    "fullDesc": "Convierte una estructura de tiempo descompuesta (local) en un valor de tiempo de calendario time_t.",
+    "proto": "time_t mktime(struct tm *tmptr);",
+    "example": "#include <stdio.h>\n#include <time.h>\n\nint main(void) {\n    struct tm fecha = {0};\n    fecha.tm_year = 124; // 2024\n    fecha.tm_mon = 0;   // Enero\n    fecha.tm_mday = 1;\n    time_t t = mktime(&fecha);\n    printf(\"Segundos hasta 2024: %ld\\n\", (long)t);\n    return 0;\n}"
+   },
+   {
+    "name": "time_t",
+    "catLabel": "Tiempo y Reloj",
+    "desc": "Tipo para representar el tiempo",
+    "fullDesc": "Tipo aritmético capaz de representar tiempos. Generalmente es un entero de 64 bits que cuenta segundos.",
+    "proto": "typedef /* long o similar */ time_t;",
+    "example": "#include <time.h>\n\nint main(void) {\n    time_t momento;\n    momento = time(NULL);\n    return 0;\n}"
+   },
+   {
+    "name": "clock_t",
+    "catLabel": "Tiempo y Reloj",
+    "desc": "Tipo para ticks de reloj",
+    "fullDesc": "Tipo aritmético capaz de representar el uso de tiempo del procesador.",
+    "proto": "typedef /* long o similar */ clock_t;",
+    "example": "#include <time.h>\n\nint main(void) {\n    clock_t t = clock();\n    return 0;\n}"
+   },
+   {
+    "name": "asctime",
+    "catLabel": "Conversión",
+    "desc": "Convierte struct tm a cadena",
+    "fullDesc": "Convierte la información de tiempo en la estructura tmptr a una cadena de caracteres con formato \"Www Mmm dd hh:mm:ss yyyy\\n\".",
+    "proto": "char *asctime(const struct tm *tmptr);",
+    "example": "#include <stdio.h>\n#include <time.h>\n\nint main(void) {\n    time_t t = time(NULL);\n    struct tm *info = localtime(&t);\n    printf(\"Fecha: %s\", asctime(info));\n    return 0;\n}"
+   },
+   {
+    "name": "ctime",
+    "catLabel": "Conversión",
+    "desc": "Convierte time_t a cadena",
+    "fullDesc": "Equivalente a asctime(localtime(timer)). Convierte un valor time_t directamente a una cadena legible.",
+    "proto": "char *ctime(const time_t *timer);",
+    "example": "#include <stdio.h>\n#include <time.h>\n\nint main(void) {\n    time_t ahora = time(NULL);\n    printf(\"Actual: %s\", ctime(&ahora));\n    return 0;\n}"
+   },
+   {
+    "name": "gmtime",
+    "catLabel": "Conversión",
+    "desc": "Convierte time_t a struct tm (UTC)",
+    "fullDesc": "Convierte un valor time_t a una estructura tm expresada como Tiempo Universal Coordinado (UTC).",
+    "proto": "struct tm *gmtime(const time_t *timer);",
+    "example": "#include <stdio.h>\n#include <time.h>\n\nint main(void) {\n    time_t t = time(NULL);\n    struct tm *utc = gmtime(&t);\n    printf(\"Hora UTC: %02d:%02d\\n\", utc->tm_hour, utc->tm_min);\n    return 0;\n}"
+   },
+   {
+    "name": "localtime",
+    "catLabel": "Conversión",
+    "desc": "Convierte time_t a struct tm (local)",
+    "fullDesc": "Convierte un valor time_t a una estructura tm expresada como tiempo local del sistema.",
+    "proto": "struct tm *localtime(const time_t *timer);",
+    "example": "#include <stdio.h>\n#include <time.h>\n\nint main(void) {\n    time_t t = time(NULL);\n    struct tm *local = localtime(&t);\n    printf(\"Hora local: %02d:%02d\\n\", local->tm_hour, local->tm_min);\n    return 0;\n}"
+   },
+   {
+    "name": "struct tm",
+    "catLabel": "Conversión",
+    "desc": "Estructura de tiempo descompuesta",
+    "fullDesc": "Estructura que contiene los componentes de una fecha y hora (segundos, minutos, horas, día, mes, año, etc.).",
+    "proto": "struct tm {\n    int tm_sec;   // 0-60\n    int tm_min;   // 0-59\n    int tm_hour;  // 0-23\n    int tm_mday;  // 1-31\n    int tm_mon;   // 0-11\n    int tm_year;  // años desde 1900\n    int tm_wday;  // día de semana 0-6\n    int tm_yday;  // día del año 0-365\n    int tm_isdst; // horario de verano\n};",
+    "example": "#include <stdio.h>\n#include <time.h>\n\nint main(void) {\n    struct tm t = {0};\n    t.tm_mday = 25;\n    t.tm_mon = 11; // Diciembre\n    t.tm_year = 123; // 2023\n    return 0;\n}"
+   },
+   {
+    "name": "strftime",
+    "catLabel": "Formateo",
+    "desc": "Formatea tiempo en una cadena",
+    "fullDesc": "Formatea la información de tiempo de tmptr en la cadena s según el formato especificado. Similar a printf pero para fechas.",
+    "proto": "size_t strftime(char *s, size_t max, const char *format,\n               const struct tm *tmptr);",
+    "example": "#include <stdio.h>\n#include <time.h>\n\nint main(void) {\n    char buffer[80];\n    time_t t = time(NULL);\n    struct tm *info = localtime(&t);\n    strftime(buffer, 80, \"%d/%m/%Y %H:%M:%S\", info);\n    printf(\"Fecha formateada: %s\\n\", buffer);\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "locale",
+  "g": "E/S y utilidades",
+  "sub": "Funciones de localización",
+  "fns": [
+   {
+    "name": "setlocale",
+    "catLabel": "Localización",
+    "desc": "Establece o consulta la configuración regional",
+    "fullDesc": "Permite cambiar o consultar la configuración regional actual del programa. El primer argumento indica la categoría y el segundo el nombre de la configuración.",
+    "proto": "char *setlocale(int category, const char *locale);",
+    "example": "#include <stdio.h>\n#include <locale.h>\n\nint main(void) {\n    char *l = setlocale(LC_ALL, \"es_ES.UTF-8\");\n    if (l) printf(\"Configuración: %s\\n\", l);\n    return 0;\n}"
+   },
+   {
+    "name": "localeconv",
+    "catLabel": "Localización",
+    "desc": "Obtiene información de formato numérico",
+    "fullDesc": "Devuelve un puntero a una estructura struct lconv con información detallada sobre cómo formatear números y valores monetarios según la configuración regional actual.",
+    "proto": "struct lconv *localeconv(void);",
+    "example": "#include <stdio.h>\n#include <locale.h>\n\nint main(void) {\n    struct lconv *lc = localeconv();\n    printf(\"Símbolo decimal: %s\\n\", lc->decimal_point);\n    printf(\"Símbolo moneda: %s\\n\", lc->currency_symbol);\n    return 0;\n}"
+   },
+   {
+    "name": "struct lconv",
+    "catLabel": "Localización",
+    "desc": "Estructura de información regional",
+    "fullDesc": "Contiene campos como decimal_point, thousands_sep, grouping, currency_symbol, etc., que describen las convenciones de formato.",
+    "proto": "struct lconv { ... };",
+    "example": "// No se instancia manualmente, se obtiene vía localeconv()"
+   },
+   {
+    "name": "LC_ALL",
+    "catLabel": "Localización",
+    "desc": "Todas las categorías",
+    "fullDesc": "Macro que representa todas las categorías de configuración regional.",
+    "proto": "#define LC_ALL ...",
+    "example": "setlocale(LC_ALL, \"\"); // Usa la del entorno"
+   },
+   {
+    "name": "LC_COLLATE",
+    "catLabel": "Localización",
+    "desc": "Ordenación de cadenas",
+    "fullDesc": "Afecta al comportamiento de strcoll y strxfrm.",
+    "proto": "#define LC_COLLATE ...",
+    "example": "setlocale(LC_COLLATE, \"C\");"
+   },
+   {
+    "name": "LC_CTYPE",
+    "catLabel": "Localización",
+    "desc": "Clasificación de caracteres",
+    "fullDesc": "Afecta a las funciones de ctype.h y a las de caracteres multibyte.",
+    "proto": "#define LC_CTYPE ...",
+    "example": "setlocale(LC_CTYPE, \"es_ES\");"
+   },
+   {
+    "name": "LC_MONETARY",
+    "catLabel": "Localización",
+    "desc": "Formato monetario",
+    "fullDesc": "Afecta a la información monetaria devuelta por localeconv.",
+    "proto": "#define LC_MONETARY ...",
+    "example": "setlocale(LC_MONETARY, \"en_US\");"
+   },
+   {
+    "name": "LC_NUMERIC",
+    "catLabel": "Localización",
+    "desc": "Formato numérico no monetario",
+    "fullDesc": "Afecta al punto decimal para funciones de entrada/salida y conversión.",
+    "proto": "#define LC_NUMERIC ...",
+    "example": "setlocale(LC_NUMERIC, \"fr_FR\");"
+   },
+   {
+    "name": "LC_TIME",
+    "catLabel": "Localización",
+    "desc": "Formato de fecha y hora",
+    "fullDesc": "Afecta al comportamiento de strftime.",
+    "proto": "#define LC_TIME ...",
+    "example": "setlocale(LC_TIME, \"de_DE\");"
+   }
+  ]
+ },
+ {
+  "h": "math",
+  "g": "Matemáticas",
+  "sub": "Referencia de funciones matemáticas comunes en C",
+  "fns": [
+   {
+    "name": "sin",
+    "catLabel": "Trigonometría",
+    "desc": "Seno de un ángulo",
+    "fullDesc": "Calcula el seno de un ángulo dado en radianes.",
+    "proto": "double sin(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    double x = 0.5;\n    printf(\"sin(%f) = %f\\n\", x, sin(x));\n    return 0;\n}"
+   },
+   {
+    "name": "cos",
+    "catLabel": "Trigonometría",
+    "desc": "Coseno de un ángulo",
+    "fullDesc": "Calcula el coseno de un ángulo dado en radianes.",
+    "proto": "double cos(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    double x = 0.5;\n    printf(\"cos(%f) = %f\\n\", x, cos(x));\n    return 0;\n}"
+   },
+   {
+    "name": "tan",
+    "catLabel": "Trigonometría",
+    "desc": "Tangente de un ángulo",
+    "fullDesc": "Calcula la tangente de un ángulo dado en radianes.",
+    "proto": "double tan(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    double x = 0.5;\n    printf(\"tan(%f) = %f\\n\", x, tan(x));\n    return 0;\n}"
+   },
+   {
+    "name": "asin",
+    "catLabel": "Trigonometría",
+    "desc": "Arco seno",
+    "fullDesc": "Calcula el arco seno (en radianes) de un número en el rango [-1, 1].",
+    "proto": "double asin(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    double x = 0.5;\n    printf(\"asin(%f) = %f rad\\n\", x, asin(x));\n    return 0;\n}"
+   },
+   {
+    "name": "acos",
+    "catLabel": "Trigonometría",
+    "desc": "Arco coseno",
+    "fullDesc": "Calcula el arco coseno (en radianes) de un número en el rango [-1, 1].",
+    "proto": "double acos(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    double x = 0.5;\n    printf(\"acos(%f) = %f rad\\n\", x, acos(x));\n    return 0;\n}"
+   },
+   {
+    "name": "atan",
+    "catLabel": "Trigonometría",
+    "desc": "Arco tangente",
+    "fullDesc": "Calcula el arco tangente (en radianes) de un número.",
+    "proto": "double atan(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    double x = 0.5;\n    printf(\"atan(%f) = %f rad\\n\", x, atan(x));\n    return 0;\n}"
+   },
+   {
+    "name": "atan2",
+    "catLabel": "Trigonometría",
+    "desc": "Arco tangente de dos variables",
+    "fullDesc": "Calcula el arco tangente de y/x, usando los signos de ambos argumentos para determinar el cuadrante del resultado.",
+    "proto": "double atan2(double y, double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    double y = 10.0, x = 5.0;\n    printf(\"atan2(%f, %f) = %f rad\\n\", y, x, atan2(y, x));\n    return 0;\n}"
+   },
+   {
+    "name": "exp",
+    "catLabel": "Exponenciales",
+    "desc": "Función exponencial",
+    "fullDesc": "Calcula el valor de e (la base de los logaritmos naturales) elevado a la potencia x.",
+    "proto": "double exp(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    double x = 1.0;\n    printf(\"exp(%f) = %f\\n\", x, exp(x));\n    return 0;\n}"
+   },
+   {
+    "name": "log",
+    "catLabel": "Exponenciales",
+    "desc": "Logaritmo natural",
+    "fullDesc": "Calcula el logaritmo natural (base e) de x.",
+    "proto": "double log(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    double x = 2.71828;\n    printf(\"log(%f) = %f\\n\", x, log(x));\n    return 0;\n}"
+   },
+   {
+    "name": "log10",
+    "catLabel": "Exponenciales",
+    "desc": "Logaritmo base 10",
+    "fullDesc": "Calcula el logaritmo común (base 10) de x.",
+    "proto": "double log10(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    double x = 100.0;\n    printf(\"log10(%f) = %f\\n\", x, log10(x));\n    return 0;\n}"
+   },
+   {
+    "name": "pow",
+    "catLabel": "Potencias",
+    "desc": "Potencia x elevado a y",
+    "fullDesc": "Calcula el valor de x elevado a la potencia y.",
+    "proto": "double pow(double x, double y);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    printf(\"2^3 = %f\\n\", pow(2.0, 3.0));\n    return 0;\n}"
+   },
+   {
+    "name": "sqrt",
+    "catLabel": "Potencias",
+    "desc": "Raíz cuadrada",
+    "fullDesc": "Calcula la raíz cuadrada no negativa de x.",
+    "proto": "double sqrt(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    printf(\"sqrt(16) = %f\\n\", sqrt(16.0));\n    return 0;\n}"
+   },
+   {
+    "name": "hypot",
+    "catLabel": "Potencias",
+    "desc": "Hipotenusa",
+    "fullDesc": "Calcula la hipotenusa de un triángulo rectángulo con catetos x e y, es decir, sqrt(x*x + y*y).",
+    "proto": "double hypot(double x, double y);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    printf(\"hypot(3, 4) = %f\\n\", hypot(3.0, 4.0));\n    return 0;\n}"
+   },
+   {
+    "name": "cbrt",
+    "catLabel": "Potencias",
+    "desc": "Raíz cúbica",
+    "fullDesc": "Calcula la raíz cúbica de x.",
+    "proto": "double cbrt(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    printf(\"cbrt(27) = %f\\n\", cbrt(27.0));\n    return 0;\n}"
+   },
+   {
+    "name": "ceil",
+    "catLabel": "Redondeo/Otros",
+    "desc": "Redondeo hacia arriba",
+    "fullDesc": "Devuelve el valor entero más pequeño que no es menor que x.",
+    "proto": "double ceil(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    printf(\"ceil(3.2) = %f\\n\", ceil(3.2));\n    return 0;\n}"
+   },
+   {
+    "name": "floor",
+    "catLabel": "Redondeo/Otros",
+    "desc": "Redondeo hacia abajo",
+    "fullDesc": "Devuelve el valor entero más grande que no es mayor que x.",
+    "proto": "double floor(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    printf(\"floor(3.8) = %f\\n\", floor(3.8));\n    return 0;\n}"
+   },
+   {
+    "name": "fabs",
+    "catLabel": "Redondeo/Otros",
+    "desc": "Valor absoluto flotante",
+    "fullDesc": "Devuelve el valor absoluto de un número de punto flotante x.",
+    "proto": "double fabs(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    printf(\"| -5.5 | = %f\\n\", fabs(-5.5));\n    return 0;\n}"
+   },
+   {
+    "name": "fmod",
+    "catLabel": "Redondeo/Otros",
+    "desc": "Resto de punto flotante",
+    "fullDesc": "Calcula el resto de la división de punto flotante de x entre y.",
+    "proto": "double fmod(double x, double y);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    printf(\"fmod(5.3, 2) = %f\\n\", fmod(5.3, 2.0));\n    return 0;\n}"
+   },
+   {
+    "name": "trunc",
+    "catLabel": "Redondeo/Otros",
+    "desc": "Truncamiento",
+    "fullDesc": "Trunca el argumento x al valor entero más cercano cuya magnitud no sea mayor que la de x.",
+    "proto": "double trunc(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    printf(\"trunc(3.9) = %f\\n\", trunc(3.9));\n    return 0;\n}"
+   },
+   {
+    "name": "round",
+    "catLabel": "Redondeo/Otros",
+    "desc": "Redondeo al más cercano",
+    "fullDesc": "Redondea x al entero más cercano. Los valores a la mitad se redondean alejándose de cero.",
+    "proto": "double round(double x);",
+    "example": "#include <stdio.h>\n#include <math.h>\n\nint main() {\n    printf(\"round(3.5) = %f\\n\", round(3.5));\n    printf(\"round(-3.5) = %f\\n\", round(-3.5));\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "complex",
+  "g": "Matemáticas",
+  "sub": "Soporte para aritmética y funciones matemáticas complejas",
+  "fns": [
+   {
+    "name": "creal",
+    "catLabel": "Aritmética Compleja",
+    "desc": "Obtiene la parte real de un número complejo",
+    "fullDesc": "Devuelve la parte real del número complejo z. Funciona para tipos double complex, float complex y long double complex.",
+    "proto": "double creal(double complex z);",
+    "example": "#include <stdio.h>\n#include <complex.h>\n\nint main(void) {\n    double complex z = 3.0 + 4.0 * I;\n    printf(\"Real: %.1f\\n\", creal(z));\n    return 0;\n}"
+   },
+   {
+    "name": "cimag",
+    "catLabel": "Aritmética Compleja",
+    "desc": "Obtiene la parte imaginaria de un número complejo",
+    "fullDesc": "Devuelve la parte imaginaria del número complejo z como un valor real.",
+    "proto": "double cimag(double complex z);",
+    "example": "#include <stdio.h>\n#include <complex.h>\n\nint main(void) {\n    double complex z = 3.0 + 4.0 * I;\n    printf(\"Imaginaria: %.1f\\n\", cimag(z));\n    return 0;\n}"
+   },
+   {
+    "name": "cabs",
+    "catLabel": "Aritmética Compleja",
+    "desc": "Calcula el valor absoluto (módulo) de un número complejo",
+    "fullDesc": "Calcula la magnitud o norma de un número complejo z, que es sqrt(re^2 + im^2).",
+    "proto": "double cabs(double complex z);",
+    "example": "#include <stdio.h>\n#include <complex.h>\n\nint main(void) {\n    double complex z = 3.0 + 4.0 * I;\n    printf(\"Módulo: %.1f\\n\", cabs(z));\n    return 0;\n}"
+   },
+   {
+    "name": "carg",
+    "catLabel": "Aritmética Compleja",
+    "desc": "Calcula el argumento (fase) de un número complejo",
+    "fullDesc": "Calcula el ángulo de la fase de z, con un corte de rama a lo largo del eje real negativo.",
+    "proto": "double carg(double complex z);",
+    "example": "#include <stdio.h>\n#include <complex.h>\n#include <math.h>\n\nint main(void) {\n    double complex z = 1.0 + 1.0 * I;\n    printf(\"Argumento (rad): %f\\n\", carg(z));\n    return 0;\n}"
+   },
+   {
+    "name": "conj",
+    "catLabel": "Aritmética Compleja",
+    "desc": "Calcula el conjugado de un número complejo",
+    "fullDesc": "Devuelve el conjugado complejo de z invirtiendo el signo de la parte imaginaria.",
+    "proto": "double complex conj(double complex z);",
+    "example": "#include <stdio.h>\n#include <complex.h>\n\nint main(void) {\n    double complex z = 3.0 + 4.0 * I;\n    double complex c = conj(z);\n    printf(\"Conjugado: %.1f + %.1fi\\n\", creal(c), cimag(c));\n    return 0;\n}"
+   },
+   {
+    "name": "cpow",
+    "catLabel": "Aritmética Compleja",
+    "desc": "Calcula la potencia de un número complejo",
+    "fullDesc": "Calcula el valor de x elevado a la potencia de y (x^y), donde ambos son complejos.",
+    "proto": "double complex cpow(double complex x, double complex y);",
+    "example": "#include <stdio.h>\n#include <complex.h>\n\nint main(void) {\n    double complex z = 2.0 + 0.0 * I;\n    double complex p = 3.0 + 0.0 * I;\n    double complex r = cpow(z, p);\n    printf(\"2^3 = %.1f\\n\", creal(r));\n    return 0;\n}"
+   },
+   {
+    "name": "csqrt",
+    "catLabel": "Aritmética Compleja",
+    "desc": "Calcula la raíz cuadrada de un número complejo",
+    "fullDesc": "Calcula la raíz cuadrada principal de z, con un corte de rama a lo largo del eje real negativo.",
+    "proto": "double complex csqrt(double complex z);",
+    "example": "#include <stdio.h>\n#include <complex.h>\n\nint main(void) {\n    double complex z = -4.0 + 0.0 * I;\n    double complex r = csqrt(z);\n    printf(\"sqrt(-4) = %.1fi\\n\", cimag(r));\n    return 0;\n}"
+   },
+   {
+    "name": "cexp",
+    "catLabel": "Aritmética Compleja",
+    "desc": "Calcula la exponencial de un número complejo",
+    "fullDesc": "Calcula la función exponencial base-e de z (e^z).",
+    "proto": "double complex cexp(double complex z);",
+    "example": "#include <stdio.h>\n#include <complex.h>\n#include <math.h>\n\nint main(void) {\n    double complex z = I * M_PI;\n    double complex r = cexp(z);\n    printf(\"e^(i*pi) = %.1f + %.1fi\\n\", creal(r), cimag(r));\n    return 0;\n}"
+   },
+   {
+    "name": "clog",
+    "catLabel": "Aritmética Compleja",
+    "desc": "Calcula el logaritmo natural de un número complejo",
+    "fullDesc": "Calcula el logaritmo natural principal de z, con un corte de rama a lo largo del eje real negativo.",
+    "proto": "double complex clog(double complex z);",
+    "example": "#include <stdio.h>\n#include <complex.h>\n\nint main(void) {\n    double complex z = 1.0 + 0.0 * I;\n    double complex r = clog(z);\n    printf(\"log(1) = %.1f\\n\", creal(r));\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "tgmath",
+  "g": "Matemáticas",
+  "sub": "Macros matemáticas genéricas para math.h y complex.h",
+  "fns": [
+   {
+    "name": "sin",
+    "catLabel": "Macros Genéricas",
+    "desc": "Seno genérico",
+    "fullDesc": "Macro que llama a sin(), sinf(), sinl(), csin(), csinf() o csinl() según el tipo del argumento.",
+    "proto": "// Macro genérica\n#define sin(x)",
+    "example": "double d = 1.0; float f = 1.0f; complex double c = 1.0 + 1.0*I;\nsin(d); // llama a sin(double)\nsin(f); // llama a sinf(float)\nsin(c); // llama a csin(complex double)"
+   },
+   {
+    "name": "sqrt",
+    "catLabel": "Macros Genéricas",
+    "desc": "Raíz cuadrada genérica",
+    "fullDesc": "Macro que selecciona la función de raíz cuadrada apropiada para tipos reales y complejos.",
+    "proto": "// Macro genérica\n#define sqrt(x)",
+    "example": "sqrt(4.0);   // llama a sqrt(double)\nsqrt(-4.0 + 0*I); // llama a csqrt(complex double)"
+   },
+   {
+    "name": "pow",
+    "catLabel": "Macros Genéricas",
+    "desc": "Potencia genérica",
+    "fullDesc": "Macro que selecciona la función de potencia apropiada basándose en los tipos de los argumentos.",
+    "proto": "// Macro genérica\n#define pow(x, y)",
+    "example": "pow(2.0, 3.0); // llama a pow(double, double)\npow(z1, z2);   // llama a cpow(complex, complex)"
+   }
+  ]
+ },
+ {
+  "h": "fenv",
+  "g": "Matemáticas",
+  "sub": "Control del entorno de punto flotante, excepciones y redondeo",
+  "fns": [
+   {
+    "name": "feclearexcept",
+    "catLabel": "Entorno Punto Flotante",
+    "desc": "Limpia las excepciones de punto flotante",
+    "fullDesc": "Intenta limpiar las excepciones de punto flotante representadas por el argumento excepts.",
+    "proto": "int feclearexcept(int excepts);",
+    "example": "#include <fenv.h>\n\nint main(void) {\n    feclearexcept(FE_ALL_EXCEPT);\n    return 0;\n}"
+   },
+   {
+    "name": "fegetexceptflag",
+    "catLabel": "Entorno Punto Flotante",
+    "desc": "Almacena el estado de las banderas de excepción",
+    "fullDesc": "Almacena una representación dependiente de la implementación de las banderas de estado de excepción en el objeto apuntado por flagp.",
+    "proto": "int fegetexceptflag(fexcept_t *flagp, int excepts);",
+    "example": "#include <fenv.h>\n\nint main(void) {\n    fexcept_t flags;\n    fegetexceptflag(&flags, FE_INVALID | FE_DIVBYZERO);\n    return 0;\n}"
+   },
+   {
+    "name": "feraiseexcept",
+    "catLabel": "Entorno Punto Flotante",
+    "desc": "Lanza excepciones de punto flotante",
+    "fullDesc": "Intenta lanzar las excepciones de punto flotante representadas por el argumento excepts.",
+    "proto": "int feraiseexcept(int excepts);",
+    "example": "#include <fenv.h>\n\nint main(void) {\n    feraiseexcept(FE_OVERFLOW);\n    return 0;\n}"
+   },
+   {
+    "name": "fesetexceptflag",
+    "catLabel": "Entorno Punto Flotante",
+    "desc": "Establece banderas de estado desde un objeto",
+    "fullDesc": "Establece las banderas de estado de excepción indicadas por excepts a partir del estado almacenado en flagp.",
+    "proto": "int fesetexceptflag(const fexcept_t *flagp, int excepts);",
+    "example": "#include <fenv.h>\n\nint main(void) {\n    fexcept_t flags;\n    fegetexceptflag(&flags, FE_ALL_EXCEPT);\n    fesetexceptflag(&flags, FE_ALL_EXCEPT);\n    return 0;\n}"
+   },
+   {
+    "name": "fetestexcept",
+    "catLabel": "Entorno Punto Flotante",
+    "desc": "Determina qué excepciones están activas",
+    "fullDesc": "Devuelve el bitwise OR de las macros de excepción que están actualmente establecidas en el entorno.",
+    "proto": "int fetestexcept(int excepts);",
+    "example": "#include <stdio.h>\n#include <fenv.h>\n\nint main(void) {\n    double x = 1.0, y = 0.0;\n    feclearexcept(FE_ALL_EXCEPT);\n    double r = x / y;\n    if (fetestexcept(FE_DIVBYZERO)) {\n        printf(\"División por cero detectada\\n\");\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "fegetround",
+    "catLabel": "Entorno Punto Flotante",
+    "desc": "Obtiene la dirección de redondeo actual",
+    "fullDesc": "Devuelve el valor de la macro que representa la dirección de redondeo actual.",
+    "proto": "int fegetround(void);",
+    "example": "#include <stdio.h>\n#include <fenv.h>\n\nint main(void) {\n    int r = fegetround();\n    if (r == FE_TONEAREST) printf(\"Redondeo al más cercano\\n\");\n    return 0;\n}"
+   },
+   {
+    "name": "fesetround",
+    "catLabel": "Entorno Punto Flotante",
+    "desc": "Establece la dirección de redondeo",
+    "fullDesc": "Establece la dirección de redondeo al valor especificado por round.",
+    "proto": "int fesetround(int round);",
+    "example": "#include <fenv.h>\n\nint main(void) {\n    fesetround(FE_UPWARD);\n    return 0;\n}"
+   },
+   {
+    "name": "fegetenv",
+    "catLabel": "Entorno Punto Flotante",
+    "desc": "Almacena el entorno de punto flotante actual",
+    "fullDesc": "Almacena el entorno de punto flotante actual en el objeto apuntado por envp.",
+    "proto": "int fegetenv(fenv_t *envp);",
+    "example": "#include <fenv.h>\n\nint main(void) {\n    fenv_t env;\n    fegetenv(&env);\n    return 0;\n}"
+   },
+   {
+    "name": "fesetenv",
+    "catLabel": "Entorno Punto Flotante",
+    "desc": "Establece el entorno de punto flotante",
+    "fullDesc": "Establece el entorno de punto flotante al estado representado por envp.",
+    "proto": "int fesetenv(const fenv_t *envp);",
+    "example": "#include <fenv.h>\n\nint main(void) {\n    fesetenv(FE_DFL_ENV);\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "float",
+  "g": "Matemáticas",
+  "sub": "Límites de los tipos de punto flotante",
+  "fns": [
+   {
+    "name": "FLT_ROUNDS",
+    "catLabel": "Límites",
+    "desc": "Modo de redondeo",
+    "fullDesc": "Define el modo de redondeo para las operaciones de punto flotante. Los valores comunes son: -1 (indeterminado), 0 (hacia cero), 1 (al más cercano), 2 (hacia infinito positivo), 3 (hacia infinito negativo).",
+    "proto": "#define FLT_ROUNDS ...",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Modo redondeo: %d\\n\", FLT_ROUNDS);\n    return 0;\n}"
+   },
+   {
+    "name": "FLT_DIG",
+    "catLabel": "Límites",
+    "desc": "Dígitos de precisión (float)",
+    "fullDesc": "Número máximo de dígitos decimales que pueden representarse en float sin pérdida de precisión.",
+    "proto": "#define FLT_DIG 6",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Precisión float: %d dígitos\\n\", FLT_DIG);\n    return 0;\n}"
+   },
+   {
+    "name": "DBL_DIG",
+    "catLabel": "Límites",
+    "desc": "Dígitos de precisión (double)",
+    "fullDesc": "Número máximo de dígitos decimales que pueden representarse en double sin pérdida de precisión.",
+    "proto": "#define DBL_DIG 10",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Precisión double: %d dígitos\\n\", DBL_DIG);\n    return 0;\n}"
+   },
+   {
+    "name": "FLT_EPSILON",
+    "catLabel": "Límites",
+    "desc": "Épsilon de float",
+    "fullDesc": "La diferencia más pequeña entre 1.0 y el siguiente valor representable en float.",
+    "proto": "#define FLT_EPSILON 1.19209290e-07F",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Épsilon float: %e\\n\", FLT_EPSILON);\n    return 0;\n}"
+   },
+   {
+    "name": "DBL_EPSILON",
+    "catLabel": "Límites",
+    "desc": "Épsilon de double",
+    "fullDesc": "La diferencia más pequeña entre 1.0 y el siguiente valor representable en double.",
+    "proto": "#define DBL_EPSILON 2.22044605e-16",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Épsilon double: %e\\n\", DBL_EPSILON);\n    return 0;\n}"
+   },
+   {
+    "name": "FLT_MANT_DIG",
+    "catLabel": "Límites",
+    "desc": "Dígitos de la mantisa (float)",
+    "fullDesc": "Número de dígitos en la mantisa del float en la base FLT_RADIX.",
+    "proto": "#define FLT_MANT_DIG ...",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Dígitos mantisa float: %d\\n\", FLT_MANT_DIG);\n    return 0;\n}"
+   },
+   {
+    "name": "FLT_MAX",
+    "catLabel": "Límites",
+    "desc": "Valor máximo de float",
+    "fullDesc": "El valor finito más grande representable en un float.",
+    "proto": "#define FLT_MAX 3.40282347e+38F",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Max float: %e\\n\", FLT_MAX);\n    return 0;\n}"
+   },
+   {
+    "name": "DBL_MAX",
+    "catLabel": "Límites",
+    "desc": "Valor máximo de double",
+    "fullDesc": "El valor finito más grande representable en un double.",
+    "proto": "#define DBL_MAX 1.79769313e+308",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Max double: %e\\n\", DBL_MAX);\n    return 0;\n}"
+   },
+   {
+    "name": "FLT_MIN",
+    "catLabel": "Límites",
+    "desc": "Valor mínimo de float",
+    "fullDesc": "El valor positivo normalizado más pequeño representable en un float.",
+    "proto": "#define FLT_MIN 1.17549435e-38F",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Min float: %e\\n\", FLT_MIN);\n    return 0;\n}"
+   },
+   {
+    "name": "DBL_MIN",
+    "catLabel": "Límites",
+    "desc": "Valor mínimo de double",
+    "fullDesc": "El valor positivo normalizado más pequeño representable en un double.",
+    "proto": "#define DBL_MIN 2.22507386e-308",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Min double: %e\\n\", DBL_MIN);\n    return 0;\n}"
+   },
+   {
+    "name": "FLT_MAX_EXP",
+    "catLabel": "Límites",
+    "desc": "Exponente máximo (float)",
+    "fullDesc": "El valor entero máximo que FLT_RADIX puede elevarse para que float sea representable.",
+    "proto": "#define FLT_MAX_EXP ...",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Max exp float: %d\\n\", FLT_MAX_EXP);\n    return 0;\n}"
+   },
+   {
+    "name": "FLT_MIN_EXP",
+    "catLabel": "Límites",
+    "desc": "Exponente mínimo (float)",
+    "fullDesc": "El valor entero mínimo que FLT_RADIX puede elevarse para que float sea representable como número normalizado.",
+    "proto": "#define FLT_MIN_EXP ...",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Min exp float: %d\\n\", FLT_MIN_EXP);\n    return 0;\n}"
+   },
+   {
+    "name": "FLT_RADIX",
+    "catLabel": "Límites",
+    "desc": "Base del exponente",
+    "fullDesc": "Base de la representación del exponente para todos los tipos de punto flotante (usualmente 2).",
+    "proto": "#define FLT_RADIX 2",
+    "example": "#include <stdio.h>\n#include <float.h>\n\nint main(void) {\n    printf(\"Base exponente: %d\\n\", FLT_RADIX);\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "stdint",
+  "g": "Tipos y límites",
+  "sub": "Tipos de enteros con anchos exactos y límites de capacidad",
+  "fns": [
+   {
+    "name": "intN_t",
+    "catLabel": "Tipos de Enteros",
+    "desc": "Enteros con signo de ancho exacto",
+    "fullDesc": "Tipos de enteros con signo que tienen exactamente N bits de ancho (e.g. int8_t, int16_t, int32_t, int64_t).",
+    "proto": "typedef /* dependiente */ intN_t;",
+    "example": "int32_t contador = 0;\nint64_t poblacion = 8000000000LL;"
+   },
+   {
+    "name": "uintN_t",
+    "catLabel": "Tipos de Enteros",
+    "desc": "Enteros sin signo de ancho exacto",
+    "fullDesc": "Tipos de enteros sin signo que tienen exactamente N bits de ancho (e.g. uint8_t, uint16_t, uint32_t, uint64_t).",
+    "proto": "typedef /* dependiente */ uintN_t;",
+    "example": "uint8_t byte = 0xFF;\nuint32_t ipv4 = 0xC0A80101;"
+   },
+   {
+    "name": "intptr_t",
+    "catLabel": "Tipos de Enteros",
+    "desc": "Entero con signo para punteros",
+    "fullDesc": "Tipo entero con signo capaz de almacenar un puntero a void de forma segura.",
+    "proto": "typedef /* dependiente */ intptr_t;",
+    "example": "int x = 10;\nintptr_t p = (intptr_t)&x;"
+   },
+   {
+    "name": "uintptr_t",
+    "catLabel": "Tipos de Enteros",
+    "desc": "Entero sin signo para punteros",
+    "fullDesc": "Tipo entero sin signo capaz de almacenar un puntero a void de forma segura.",
+    "proto": "typedef /* dependiente */ uintptr_t;",
+    "example": "void *ptr = malloc(100);\nuintptr_t addr = (uintptr_t)ptr;"
+   },
+   {
+    "name": "intmax_t",
+    "catLabel": "Tipos de Enteros",
+    "desc": "Entero con signo de máximo ancho",
+    "fullDesc": "El tipo entero con signo con el mayor ancho posible en la implementación.",
+    "proto": "typedef /* dependiente */ intmax_t;",
+    "example": "intmax_t max_val = 9223372036854775807LL;"
+   },
+   {
+    "name": "uintmax_t",
+    "catLabel": "Tipos de Enteros",
+    "desc": "Entero sin signo de máximo ancho",
+    "fullDesc": "El tipo entero sin signo con el mayor ancho posible en la implementación.",
+    "proto": "typedef /* dependiente */ uintmax_t;",
+    "example": "uintmax_t umax_val = 0xFFFFFFFFFFFFFFFFULL;"
+   }
+  ]
+ },
+ {
+  "h": "inttypes",
+  "g": "Tipos y límites",
+  "sub": "Conversiones de tipos enteros de tamaño exacto y macros de formato",
+  "fns": [
+   {
+    "name": "imaxabs",
+    "catLabel": "Conversión/Formato",
+    "desc": "Valor absoluto para intmax_t",
+    "fullDesc": "Calcula el valor absoluto de un entero de tipo intmax_t.",
+    "proto": "intmax_t imaxabs(intmax_t j);",
+    "example": "#include <inttypes.h>\n#include <stdio.h>\n\nint main(void) {\n    intmax_t n = -123456789012345LL;\n    printf(\"|%\" PRIdMAX \"| = %\" PRIdMAX \"\\n\", n, imaxabs(n));\n    return 0;\n}"
+   },
+   {
+    "name": "imaxdiv",
+    "catLabel": "Conversión/Formato",
+    "desc": "División para intmax_t",
+    "fullDesc": "Calcula el cociente y el resto de la división de numer entre denom en una sola operación para intmax_t.",
+    "proto": "imaxdiv_t imaxdiv(intmax_t numer, intmax_t denom);",
+    "example": "#include <inttypes.h>\n#include <stdio.h>\n\nint main(void) {\n    imaxdiv_t res = imaxdiv(100, 3);\n    printf(\"100/3 = %\" PRIdMAX \" rem %\" PRIdMAX \"\\n\", res.quot, res.rem);\n    return 0;\n}"
+   },
+   {
+    "name": "strtoimax",
+    "catLabel": "Conversión/Formato",
+    "desc": "Cadena a intmax_t",
+    "fullDesc": "Convierte la parte inicial de una cadena a un valor intmax_t con base configurable.",
+    "proto": "intmax_t strtoimax(const char *nptr, char **endptr, int base);",
+    "example": "#include <inttypes.h>\n\nint main(void) {\n    intmax_t val = strtoimax(\"12345\", NULL, 10);\n    return 0;\n}"
+   },
+   {
+    "name": "strtoumax",
+    "catLabel": "Conversión/Formato",
+    "desc": "Cadena a uintmax_t",
+    "fullDesc": "Convierte la parte inicial de una cadena a un valor uintmax_t con base configurable.",
+    "proto": "uintmax_t strtoumax(const char *nptr, char **endptr, int base);",
+    "example": "#include <inttypes.h>\n\nint main(void) {\n    uintmax_t val = strtoumax(\"0xFF\", NULL, 16);\n    return 0;\n}"
+   },
+   {
+    "name": "PRIdN",
+    "catLabel": "Conversión/Formato",
+    "desc": "Macros para printf (con signo)",
+    "fullDesc": "Macros de formato para imprimir tipos enteros con signo de N bits (e.g. PRId8, PRId16, PRId32, PRId64).",
+    "proto": "// Ejemplo: PRId32, PRId64, PRIdMAX",
+    "example": "#include <inttypes.h>\n#include <stdio.h>\n\nint main(void) {\n    int32_t n = 42;\n    printf(\"Valor: %\" PRId32 \"\\n\", n);\n    return 0;\n}"
+   },
+   {
+    "name": "PRIuN",
+    "catLabel": "Conversión/Formato",
+    "desc": "Macros para printf (sin signo)",
+    "fullDesc": "Macros de formato para imprimir tipos enteros sin signo de N bits (e.g. PRIu8, PRIu16, PRIu32, PRIu64).",
+    "proto": "// Ejemplo: PRIu32, PRIu64, PRIuMAX",
+    "example": "#include <inttypes.h>\n#include <stdio.h>\n\nint main(void) {\n    uint64_t n = 123456789;\n    printf(\"Valor: %\" PRIu64 \"\\n\", n);\n    return 0;\n}"
+   },
+   {
+    "name": "SCNdN",
+    "catLabel": "Conversión/Formato",
+    "desc": "Macros para scanf",
+    "fullDesc": "Macros de formato para leer tipos enteros con signo de N bits usando scanf.",
+    "proto": "// Ejemplo: SCNd32, SCNd64",
+    "example": "#include <inttypes.h>\n#include <stdio.h>\n\nint main(void) {\n    int32_t n;\n    scanf(\"%\" SCNd32, &n);\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "limits",
+  "g": "Tipos y límites",
+  "sub": "Límites de los tipos de datos enteros",
+  "fns": [
+   {
+    "name": "CHAR_BIT",
+    "catLabel": "Límites",
+    "desc": "Número de bits en un char",
+    "fullDesc": "Define el número de bits en un byte (usualmente 8).",
+    "proto": "#define CHAR_BIT 8",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Bits por char: %d\\n\", CHAR_BIT);\n    return 0;\n}"
+   },
+   {
+    "name": "SCHAR_MIN",
+    "catLabel": "Límites",
+    "desc": "Mínimo signed char",
+    "fullDesc": "El valor mínimo representable en un signed char.",
+    "proto": "#define SCHAR_MIN -128",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Min signed char: %d\\n\", SCHAR_MIN);\n    return 0;\n}"
+   },
+   {
+    "name": "SCHAR_MAX",
+    "catLabel": "Límites",
+    "desc": "Máximo signed char",
+    "fullDesc": "El valor máximo representable en un signed char.",
+    "proto": "#define SCHAR_MAX 127",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Max signed char: %d\\n\", SCHAR_MAX);\n    return 0;\n}"
+   },
+   {
+    "name": "UCHAR_MAX",
+    "catLabel": "Límites",
+    "desc": "Máximo unsigned char",
+    "fullDesc": "El valor máximo representable en un unsigned char.",
+    "proto": "#define UCHAR_MAX 255",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Max unsigned char: %u\\n\", UCHAR_MAX);\n    return 0;\n}"
+   },
+   {
+    "name": "SHRT_MIN",
+    "catLabel": "Límites",
+    "desc": "Mínimo short int",
+    "fullDesc": "El valor mínimo representable en un short int.",
+    "proto": "#define SHRT_MIN -32768",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Min short: %d\\n\", SHRT_MIN);\n    return 0;\n}"
+   },
+   {
+    "name": "SHRT_MAX",
+    "catLabel": "Límites",
+    "desc": "Máximo short int",
+    "fullDesc": "El valor máximo representable en un short int.",
+    "proto": "#define SHRT_MAX 32767",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Max short: %d\\n\", SHRT_MAX);\n    return 0;\n}"
+   },
+   {
+    "name": "INT_MIN",
+    "catLabel": "Límites",
+    "desc": "Mínimo int",
+    "fullDesc": "El valor mínimo representable en un int.",
+    "proto": "#define INT_MIN -2147483648",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Min int: %d\\n\", INT_MIN);\n    return 0;\n}"
+   },
+   {
+    "name": "INT_MAX",
+    "catLabel": "Límites",
+    "desc": "Máximo int",
+    "fullDesc": "El valor máximo representable en un int.",
+    "proto": "#define INT_MAX 2147483647",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Max int: %d\\n\", INT_MAX);\n    return 0;\n}"
+   },
+   {
+    "name": "UINT_MAX",
+    "catLabel": "Límites",
+    "desc": "Máximo unsigned int",
+    "fullDesc": "El valor máximo representable en un unsigned int.",
+    "proto": "#define UINT_MAX 4294967295U",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Max unsigned: %u\\n\", UINT_MAX);\n    return 0;\n}"
+   },
+   {
+    "name": "LONG_MIN",
+    "catLabel": "Límites",
+    "desc": "Mínimo long int",
+    "fullDesc": "El valor mínimo representable en un long int.",
+    "proto": "#define LONG_MIN -9223372036854775808L",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Min long: %ld\\n\", LONG_MIN);\n    return 0;\n}"
+   },
+   {
+    "name": "LONG_MAX",
+    "catLabel": "Límites",
+    "desc": "Máximo long int",
+    "fullDesc": "El valor máximo representable en un long int.",
+    "proto": "#define LONG_MAX 9223372036854775807L",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Max long: %ld\\n\", LONG_MAX);\n    return 0;\n}"
+   },
+   {
+    "name": "ULONG_MAX",
+    "catLabel": "Límites",
+    "desc": "Máximo unsigned long int",
+    "fullDesc": "El valor máximo representable en un unsigned long int.",
+    "proto": "#define ULONG_MAX 18446744073709551615UL",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Max unsigned long: %lu\\n\", ULONG_MAX);\n    return 0;\n}"
+   },
+   {
+    "name": "MB_LEN_MAX",
+    "catLabel": "Límites",
+    "desc": "Bytes máximos en un carácter multibyte",
+    "fullDesc": "El número máximo de bytes en un carácter multibyte para cualquier configuración regional.",
+    "proto": "#define MB_LEN_MAX 16",
+    "example": "#include <stdio.h>\n#include <limits.h>\n\nint main(void) {\n    printf(\"Max bytes multibyte: %d\\n\", MB_LEN_MAX);\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "stddef",
+  "g": "Tipos y límites",
+  "sub": "Referencia completa de definiciones comunes de la biblioteca estándar de C",
+  "fns": [
+   {
+    "name": "size_t",
+    "catLabel": "Definiciones",
+    "desc": "Tipo entero sin signo para tamaños de objetos",
+    "fullDesc": "Tipo entero sin signo devuelto por el operador sizeof. Se utiliza para representar tamaños y recuentos en C.",
+    "proto": "typedef /* tipo entero sin signo */ size_t;",
+    "example": "#include <stddef.h>\n#include <stdio.h>\n\nint main(void) {\n    size_t s = sizeof(int);\n    printf(\"Tamaño de int: %zu bytes\\n\", s);\n    return 0;\n}"
+   },
+   {
+    "name": "ptrdiff_t",
+    "catLabel": "Definiciones",
+    "desc": "Tipo entero con signo para diferencia de punteros",
+    "fullDesc": "Tipo entero con signo que resulta de restar dos punteros.",
+    "proto": "typedef /* tipo entero con signo */ ptrdiff_t;",
+    "example": "#include <stddef.h>\n#include <stdio.h>\n\nint main(void) {\n    int array[10];\n    int *p1 = &array[0];\n    int *p2 = &array[5];\n    ptrdiff_t diff = p2 - p1;\n    printf(\"Diferencia: %td\\n\", diff);\n    return 0;\n}"
+   },
+   {
+    "name": "wchar_t",
+    "catLabel": "Definiciones",
+    "desc": "Tipo entero para caracteres anchos",
+    "fullDesc": "Tipo entero cuyo rango de valores puede representar códigos distintos para todos los miembros del conjunto de caracteres extendido más grande especificado entre las localidades soportadas.",
+    "proto": "typedef /* tipo entero */ wchar_t;",
+    "example": "#include <stddef.h>\n\nwchar_t c = L'A';\nwchar_t *str = L\"Hola mundo\";"
+   },
+   {
+    "name": "NULL",
+    "catLabel": "Definiciones",
+    "desc": "Macro que expande a una constante de puntero nulo",
+    "fullDesc": "Macro que representa un puntero que no apunta a ningún objeto o función.",
+    "proto": "#define NULL ((void*)0)",
+    "example": "#include <stddef.h>\n\nint *p = NULL;\nif (p == NULL) {\n    // El puntero es nulo\n}"
+   },
+   {
+    "name": "offsetof",
+    "catLabel": "Definiciones",
+    "desc": "Macro para obtener el desplazamiento de un miembro en una estructura",
+    "fullDesc": "Macro que se expande a una constante de tipo size_t que representa el desplazamiento en bytes de un miembro desde el inicio de su estructura.",
+    "proto": "#define offsetof(type, member)",
+    "example": "#include <stddef.h>\n#include <stdio.h>\n\nstruct MiStruct {\n    char c;\n    int i;\n};\n\nint main(void) {\n    size_t off = offsetof(struct MiStruct, i);\n    printf(\"Desplazamiento de i: %zu bytes\\n\", off);\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "stdbool",
+  "g": "Tipos y límites",
+  "sub": "Soporte para el tipo de datos booleano y sus constantes",
+  "fns": [
+   {
+    "name": "bool",
+    "catLabel": "Tipos Booleanos",
+    "desc": "Tipo de datos booleano",
+    "fullDesc": "Macro que se expande al tipo básico _Bool de C99.",
+    "proto": "#define bool _Bool",
+    "example": "bool es_valido = true;"
+   },
+   {
+    "name": "true",
+    "catLabel": "Tipos Booleanos",
+    "desc": "Constante de verdad",
+    "fullDesc": "Macro que se expande a la constante entera 1.",
+    "proto": "#define true 1",
+    "example": "if (es_valido == true) { ... }"
+   },
+   {
+    "name": "false",
+    "catLabel": "Tipos Booleanos",
+    "desc": "Constante de falsedad",
+    "fullDesc": "Macro que se expande a la constante entera 0.",
+    "proto": "#define false 0",
+    "example": "if (es_valido == false) { ... }"
+   },
+   {
+    "name": "__bool_true_false_are_defined",
+    "catLabel": "Tipos Booleanos",
+    "desc": "Indicador de definición",
+    "fullDesc": "Macro que se expande a 1, indicando que bool, true y false están definidos.",
+    "proto": "#define __bool_true_false_are_defined 1",
+    "example": "#ifdef __bool_true_false_are_defined\n    // Booleano estándar disponible\n#endif"
+   }
+  ]
+ },
+ {
+  "h": "iso646",
+  "g": "Tipos y límites",
+  "sub": "Macros para operadores lógicos y de bits alternativos",
+  "fns": [
+   {
+    "name": "and",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador lógico AND (&&)",
+    "fullDesc": "Se expande al operador lógico AND (&&).",
+    "proto": "#define and &&",
+    "example": "if (a < 10 and b > 5) { ... }"
+   },
+   {
+    "name": "and_eq",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador de asignación AND (&=)",
+    "fullDesc": "Se expande al operador de asignación bit a bit AND (&=).",
+    "proto": "#define and_eq &=",
+    "example": "a and_eq mask;"
+   },
+   {
+    "name": "bitand",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador bit a bit AND (&)",
+    "fullDesc": "Se expande al operador bit a bit AND (&).",
+    "proto": "#define bitand &",
+    "example": "result = a bitand b;"
+   },
+   {
+    "name": "bitor",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador bit a bit OR (|)",
+    "fullDesc": "Se expande al operador bit a bit OR (|).",
+    "proto": "#define bitor |",
+    "example": "result = a bitor b;"
+   },
+   {
+    "name": "compl",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador de complemento (~)",
+    "fullDesc": "Se expande al operador de complemento a uno bit a bit (~).",
+    "proto": "#define compl ~",
+    "example": "a = compl b;"
+   },
+   {
+    "name": "not",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador lógico NOT (!)",
+    "fullDesc": "Se expande al operador lógico de negación (!).",
+    "proto": "#define not !",
+    "example": "if (not flag) { ... }"
+   },
+   {
+    "name": "not_eq",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador de desigualdad (!=)",
+    "fullDesc": "Se expande al operador de desigualdad (!=).",
+    "proto": "#define not_eq !=",
+    "example": "if (a not_eq b) { ... }"
+   },
+   {
+    "name": "or",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador lógico OR (||)",
+    "fullDesc": "Se expande al operador lógico OR (||).",
+    "proto": "#define or ||",
+    "example": "if (a or b) { ... }"
+   },
+   {
+    "name": "or_eq",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador de asignación OR (|=)",
+    "fullDesc": "Se expande al operador de asignación bit a bit OR (|=).",
+    "proto": "#define or_eq |=",
+    "example": "a or_eq mask;"
+   },
+   {
+    "name": "xor",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador bit a bit XOR (^)",
+    "fullDesc": "Se expande al operador bit a bit XOR (^).",
+    "proto": "#define xor ^",
+    "example": "result = a xor b;"
+   },
+   {
+    "name": "xor_eq",
+    "catLabel": "Operadores Alternativos",
+    "desc": "Operador de asignación XOR (^=)",
+    "fullDesc": "Se expande al operador de asignación bit a bit XOR (^=).",
+    "proto": "#define xor_eq ^=",
+    "example": "a xor_eq mask;"
+   }
+  ]
+ },
+ {
+  "h": "ctype",
+  "g": "Caracteres",
+  "sub": "Clasificación y conversión de caracteres",
+  "fns": [
+   {
+    "name": "isalnum",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si es alfanumérico",
+    "fullDesc": "Comprueba si el carácter es una letra (a-z, A-Z) o un número (0-9).",
+    "proto": "int isalnum(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = 'a';\n    if (isalnum(c)) printf(\"%c es alfanumérico\\n\", c);\n    return 0;\n}"
+   },
+   {
+    "name": "isalpha",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si es alfabético",
+    "fullDesc": "Comprueba si el carácter es una letra (a-z, A-Z).",
+    "proto": "int isalpha(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = 'A';\n    if (isalpha(c)) printf(\"%c es una letra\\n\", c);\n    return 0;\n}"
+   },
+   {
+    "name": "iscntrl",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si es un carácter de control",
+    "fullDesc": "Comprueba si el carácter es un carácter de control (en ASCII, valores de 0 a 31 y 127).",
+    "proto": "int iscntrl(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = '\\n';\n    if (iscntrl(c)) printf(\"Es un carácter de control\\n\");\n    return 0;\n}"
+   },
+   {
+    "name": "isdigit",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si es un dígito decimal",
+    "fullDesc": "Comprueba si el carácter es un número entre 0 y 9.",
+    "proto": "int isdigit(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = '5';\n    if (isdigit(c)) printf(\"%c es un dígito\\n\", c);\n    return 0;\n}"
+   },
+   {
+    "name": "isgraph",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si tiene representación gráfica",
+    "fullDesc": "Comprueba si el carácter tiene representación gráfica (todos los caracteres imprimibles excepto el espacio).",
+    "proto": "int isgraph(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = '!';\n    if (isgraph(c)) printf(\"%c tiene representación gráfica\\n\", c);\n    return 0;\n}"
+   },
+   {
+    "name": "islower",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si es minúscula",
+    "fullDesc": "Comprueba si el carácter es una letra minúscula (a-z).",
+    "proto": "int islower(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = 'g';\n    if (islower(c)) printf(\"%c es minúscula\\n\", c);\n    return 0;\n}"
+   },
+   {
+    "name": "isprint",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si es imprimible",
+    "fullDesc": "Comprueba si el carácter es imprimible, incluyendo el espacio.",
+    "proto": "int isprint(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = ' ';\n    if (isprint(c)) printf(\"El carácter es imprimible\\n\");\n    return 0;\n}"
+   },
+   {
+    "name": "ispunct",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si es signo de puntuación",
+    "fullDesc": "Comprueba si el carácter es un signo de puntuación (caracteres gráficos que no son alfanuméricos).",
+    "proto": "int ispunct(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = ';';\n    if (ispunct(c)) printf(\"%c es signo de puntuación\\n\", c);\n    return 0;\n}"
+   },
+   {
+    "name": "isspace",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si es espacio en blanco",
+    "fullDesc": "Comprueba si el carácter es un espacio, tabulación, salto de línea, retorno de carro, tabulación vertical o avance de página.",
+    "proto": "int isspace(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = ' ';\n    if (isspace(c)) printf(\"Es un espacio en blanco\\n\");\n    return 0;\n}"
+   },
+   {
+    "name": "isupper",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si es mayúscula",
+    "fullDesc": "Comprueba si el carácter es una letra mayúscula (A-Z).",
+    "proto": "int isupper(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = 'Z';\n    if (isupper(c)) printf(\"%c es mayúscula\\n\", c);\n    return 0;\n}"
+   },
+   {
+    "name": "isxdigit",
+    "catLabel": "Pruebas",
+    "desc": "Comprueba si es dígito hexadecimal",
+    "fullDesc": "Comprueba si el carácter es un dígito hexadecimal (0-9, a-f, A-F).",
+    "proto": "int isxdigit(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = 'f';\n    if (isxdigit(c)) printf(\"%c es dígito hexadecimal\\n\", c);\n    return 0;\n}"
+   },
+   {
+    "name": "tolower",
+    "catLabel": "Conversión",
+    "desc": "Convierte a minúscula",
+    "fullDesc": "Convierte el carácter a su equivalente en minúscula si es posible.",
+    "proto": "int tolower(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = 'A';\n    printf(\"%c en minúscula es %c\\n\", c, tolower(c));\n    return 0;\n}"
+   },
+   {
+    "name": "toupper",
+    "catLabel": "Conversión",
+    "desc": "Convierte a mayúscula",
+    "fullDesc": "Convierte el carácter a su equivalente en mayúscula si es posible.",
+    "proto": "int toupper(int c);",
+    "example": "#include <stdio.h>\n#include <ctype.h>\n\nint main(void) {\n    char c = 'b';\n    printf(\"%c en mayúscula es %c\\n\", c, toupper(c));\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "wchar",
+  "g": "Caracteres",
+  "sub": "Soporte para caracteres anchos y cadenas de texto extendidas",
+  "fns": [
+   {
+    "name": "fwprintf",
+    "catLabel": "Caracteres Anchos",
+    "desc": "Salida formateada a stream",
+    "fullDesc": "Escribe caracteres anchos formateados al stream especificado.",
+    "proto": "int fwprintf(FILE *stream, const wchar_t *format, ...);",
+    "example": "fwprintf(stdout, L\"Hola %ls\\n\", L\"mundo\");"
+   },
+   {
+    "name": "fwscanf",
+    "catLabel": "Caracteres Anchos",
+    "desc": "Entrada formateada desde stream",
+    "fullDesc": "Lee caracteres anchos formateados desde el stream especificado.",
+    "proto": "int fwscanf(FILE *stream, const wchar_t *format, ...);",
+    "example": "wchar_t buf[100];\nfwscanf(stdin, L\"%ls\", buf);"
+   },
+   {
+    "name": "swprintf",
+    "catLabel": "Caracteres Anchos",
+    "desc": "Salida formateada a buffer",
+    "fullDesc": "Escribe caracteres anchos formateados a un array de caracteres anchos.",
+    "proto": "int swprintf(wchar_t *s, size_t n, const wchar_t *format, ...);",
+    "example": "wchar_t buf[50];\nswprintf(buf, 50, L\"Valor: %d\", 42);"
+   },
+   {
+    "name": "vfwprintf",
+    "catLabel": "Caracteres Anchos",
+    "desc": "fwprintf con va_list",
+    "fullDesc": "Versión de fwprintf que recibe un objeto va_list.",
+    "proto": "int vfwprintf(FILE *stream, const wchar_t *format, va_list arg);",
+    "example": "// Uso interno en funciones variádicas"
+   },
+   {
+    "name": "getwc",
+    "catLabel": "Caracteres Anchos",
+    "desc": "Lee un carácter ancho",
+    "fullDesc": "Lee el siguiente carácter ancho del stream de entrada.",
+    "proto": "wint_t getwc(FILE *stream);",
+    "example": "wint_t wc = getwc(stdin);"
+   },
+   {
+    "name": "putwc",
+    "catLabel": "Caracteres Anchos",
+    "desc": "Escribe un carácter ancho",
+    "fullDesc": "Escribe un carácter ancho al stream de salida.",
+    "proto": "wint_t putwc(wchar_t c, FILE *stream);",
+    "example": "putwc(L'A', stdout);"
+   },
+   {
+    "name": "wcscpy",
+    "catLabel": "Caracteres Anchos",
+    "desc": "Copia cadenas ancha",
+    "fullDesc": "Copia la cadena de caracteres anchos origen al destino.",
+    "proto": "wchar_t *wcscpy(wchar_t *dest, const wchar_t *src);",
+    "example": "wchar_t dest[20];\nwcscpy(dest, L\"Copia\");"
+   },
+   {
+    "name": "wcscat",
+    "catLabel": "Caracteres Anchos",
+    "desc": "Concatena cadenas ancha",
+    "fullDesc": "Añade la cadena origen al final de la cadena destino.",
+    "proto": "wchar_t *wcscat(wchar_t *dest, const wchar_t *src);",
+    "example": "wcscat(dest, L\" mas\");"
+   },
+   {
+    "name": "wcscmp",
+    "catLabel": "Caracteres Anchos",
+    "desc": "Compara cadenas ancha",
+    "fullDesc": "Compara lexicográficamente dos cadenas de caracteres anchos.",
+    "proto": "int wcscmp(const wchar_t *s1, const wchar_t *s2);",
+    "example": "if (wcscmp(s1, s2) == 0) { ... }"
+   },
+   {
+    "name": "wcsstr",
+    "catLabel": "Caracteres Anchos",
+    "desc": "Busca subcadena ancha",
+    "fullDesc": "Busca la primera aparición de una subcadena en otra cadena ancha.",
+    "proto": "wchar_t *wcsstr(const wchar_t *dest, const wchar_t *src);",
+    "example": "wchar_t *p = wcsstr(L\"hola mundo\", L\"mundo\");"
+   },
+   {
+    "name": "wcslen",
+    "catLabel": "Caracteres Anchos",
+    "desc": "Longitud de cadena ancha",
+    "fullDesc": "Calcula el número de caracteres anchos en una cadena (sin contar el nulo final).",
+    "proto": "size_t wcslen(const wchar_t *s);",
+    "example": "size_t n = wcslen(L\"test\");"
+   }
+  ]
+ },
+ {
+  "h": "wctype",
+  "g": "Caracteres",
+  "sub": "Funciones de clasificación y mapeo para caracteres anchos",
+  "fns": [
+   {
+    "name": "iswalpha",
+    "catLabel": "Clasificación/Mapeo Ancho",
+    "desc": "Comprueba si es alfabético",
+    "fullDesc": "Determina si el carácter ancho especificado pertenece a la clase de caracteres alfabéticos.",
+    "proto": "int iswalpha(wint_t wc);",
+    "example": "if (iswalpha(L'A')) { ... }"
+   },
+   {
+    "name": "iswdigit",
+    "catLabel": "Clasificación/Mapeo Ancho",
+    "desc": "Comprueba si es dígito",
+    "fullDesc": "Determina si el carácter ancho especificado es un dígito decimal (0-9).",
+    "proto": "int iswdigit(wint_t wc);",
+    "example": "if (iswdigit(L'5')) { ... }"
+   },
+   {
+    "name": "iswspace",
+    "catLabel": "Clasificación/Mapeo Ancho",
+    "desc": "Comprueba si es espacio",
+    "fullDesc": "Determina si el carácter ancho especificado es un carácter de espacio en blanco.",
+    "proto": "int iswspace(wint_t wc);",
+    "example": "if (iswspace(L' ')) { ... }"
+   },
+   {
+    "name": "iswupper",
+    "catLabel": "Clasificación/Mapeo Ancho",
+    "desc": "Comprueba si es mayúscula",
+    "fullDesc": "Determina si el carácter ancho especificado es una letra mayúscula.",
+    "proto": "int iswupper(wint_t wc);",
+    "example": "if (iswupper(L'Z')) { ... }"
+   },
+   {
+    "name": "iswlower",
+    "catLabel": "Clasificación/Mapeo Ancho",
+    "desc": "Comprueba si es minúscula",
+    "fullDesc": "Determina si el carácter ancho especificado es una letra minúscula.",
+    "proto": "int iswlower(wint_t wc);",
+    "example": "if (iswlower(L'a')) { ... }"
+   },
+   {
+    "name": "towlower",
+    "catLabel": "Clasificación/Mapeo Ancho",
+    "desc": "Convierte a minúscula",
+    "fullDesc": "Convierte el carácter ancho especificado a su equivalente en minúscula.",
+    "proto": "wint_t towlower(wint_t wc);",
+    "example": "wint_t lower = towlower(L'B');"
+   },
+   {
+    "name": "towupper",
+    "catLabel": "Clasificación/Mapeo Ancho",
+    "desc": "Convierte a mayúscula",
+    "fullDesc": "Convierte el carácter ancho especificado a su equivalente en mayúscula.",
+    "proto": "wint_t towupper(wint_t wc);",
+    "example": "wint_t upper = towupper(L'y');"
+   },
+   {
+    "name": "wctype",
+    "catLabel": "Clasificación/Mapeo Ancho",
+    "desc": "Obtiene tipo de propiedad",
+    "fullDesc": "Devuelve un valor que representa una propiedad de carácter ancho (\"alnum\", \"alpha\", etc.).",
+    "proto": "wctype_t wctype(const char *property);",
+    "example": "wctype_t digit = wctype(\"digit\");"
+   },
+   {
+    "name": "iswctype",
+    "catLabel": "Clasificación/Mapeo Ancho",
+    "desc": "Clasifica según propiedad",
+    "fullDesc": "Determina si el carácter ancho wc tiene la propiedad especificada por desc.",
+    "proto": "int iswctype(wint_t wc, wctype_t desc);",
+    "example": "if (iswctype(wc, wctype(\"alpha\"))) { ... }"
+   },
+   {
+    "name": "wctrans",
+    "catLabel": "Clasificación/Mapeo Ancho",
+    "desc": "Obtiene mapeo",
+    "fullDesc": "Devuelve un valor que representa un mapeo de caracteres (\"tolower\", \"toupper\").",
+    "proto": "wctrans_t wctrans(const char *name);",
+    "example": "wctrans_t mapping = wctrans(\"toupper\");"
+   }
+  ]
+ },
+ {
+  "h": "assert",
+  "g": "Errores y control",
+  "sub": "Referencia completa de macros de diagnóstico de la biblioteca estándar de C",
+  "fns": [
+   {
+    "name": "assert",
+    "catLabel": "Diagnóstico",
+    "desc": "Macro para abortar el programa si la condición es falsa",
+    "fullDesc": "Evalúa una expresión escalar. Si es cero (falsa), escribe un mensaje de error en stderr y llama a abort(). Si NDEBUG está definido antes de incluir assert.h, la macro no hace nada.",
+    "proto": "void assert(int expression);",
+    "example": "#include <stdio.h>\n#include <assert.h>\n\nint main(void) {\n    int x = 10;\n    assert(x == 10);\n    printf(\"X es 10\\n\");\n    \n    assert(x == 5); // Esto fallará y abortará el programa\n    printf(\"Esto no se imprimirá\\n\");\n    return 0;\n}"
+   }
+  ]
+ },
+ {
+  "h": "errno",
+  "g": "Errores y control",
+  "sub": "Referencia completa de macros de error de la biblioteca estándar de C",
+  "fns": [
+   {
+    "name": "errno",
+    "catLabel": "Errores",
+    "desc": "Variable que indica el último código de error",
+    "fullDesc": "Es un lvalue de tipo int que se expande a un valor de error entero. Es modificado por varias funciones de la biblioteca estándar para indicar qué error ocurrió.",
+    "proto": "extern int errno;",
+    "example": "#include <stdio.h>\n#include <errno.h>\n#include <math.h>\n\nint main(void) {\n    errno = 0;\n    sqrt(-1.0);\n    if (errno == EDOM) {\n        printf(\"Error de dominio detectado\\n\");\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "EDOM",
+    "catLabel": "Errores",
+    "desc": "Error de dominio matemático",
+    "fullDesc": "Macro que representa un error de dominio. Ocurre cuando un argumento de entrada está fuera del dominio en el que se define la función matemática.",
+    "proto": "#define EDOM /* valor entero constante */",
+    "example": "#include <stdio.h>\n#include <errno.h>\n#include <math.h>\n\nint main(void) {\n    errno = 0;\n    acos(2.0);\n    if (errno == EDOM) perror(\"Error en acos\");\n    return 0;\n}"
+   },
+   {
+    "name": "ERANGE",
+    "catLabel": "Errores",
+    "desc": "Error de rango (resultado no representable)",
+    "fullDesc": "Macro que indica un error de rango. Ocurre cuando el resultado de una función es demasiado grande o demasiado pequeño para ser representado por el tipo de retorno.",
+    "proto": "#define ERANGE /* valor entero constante */",
+    "example": "#include <stdio.h>\n#include <errno.h>\n#include <math.h>\n\nint main(void) {\n    errno = 0;\n    exp(1000.0);\n    if (errno == ERANGE) perror(\"Error de rango en exp\");\n    return 0;\n}"
+   },
+   {
+    "name": "EILSEQ",
+    "catLabel": "Errores",
+    "desc": "Secuencia de bytes ilegal",
+    "fullDesc": "Macro que indica una secuencia de bytes ilegal en una conversión de caracteres anchos o multibyte.",
+    "proto": "#define EILSEQ /* valor entero constante */",
+    "example": "#include <stdio.h>\n#include <errno.h>\n#include <wchar.h>\n\n// EILSEQ es comúnmente usado en funciones de conversión\n// como mbrtowc cuando encuentran una secuencia inválida."
+   }
+  ]
+ },
+ {
+  "h": "signal",
+  "g": "Errores y control",
+  "sub": "Manejo de señales del sistema",
+  "fns": [
+   {
+    "name": "signal",
+    "catLabel": "Señales",
+    "desc": "Establece un manejador de señal",
+    "fullDesc": "Asocia una función personalizada o una acción predeterminada (SIG_DFL, SIG_IGN) a una señal específica.",
+    "proto": "void (*signal(int sig, void (*func)(int)))(int);",
+    "example": "#include <stdio.h>\n#include <signal.h>\n#include <stdlib.h>\n\nvoid manejador(int sig) {\n    printf(\"Recibida señal %d. Saliendo...\\n\", sig);\n    exit(0);\n}\n\nint main(void) {\n    signal(SIGINT, manejador);\n    while(1); // Espera Ctrl+C\n    return 0;\n}"
+   },
+   {
+    "name": "raise",
+    "catLabel": "Señales",
+    "desc": "Envía una señal al programa actual",
+    "fullDesc": "Provoca que se envíe la señal especificada al propio programa en ejecución.",
+    "proto": "int raise(int sig);",
+    "example": "#include <signal.h>\n#include <stdio.h>\n\nint main(void) {\n    printf(\"Autogenerando SIGABRT...\\n\");\n    raise(SIGABRT);\n    return 0;\n}"
+   },
+   {
+    "name": "sig_atomic_t",
+    "catLabel": "Señales",
+    "desc": "Tipo de dato atómico para señales",
+    "fullDesc": "Tipo entero que puede ser accedido como una entidad atómica incluso en presencia de interrupciones por señales.",
+    "proto": "typedef ... sig_atomic_t;",
+    "example": "volatile sig_atomic_t listo = 0;"
+   },
+   {
+    "name": "SIGINT",
+    "catLabel": "Señales",
+    "desc": "Interrupción (Ctrl+C)",
+    "fullDesc": "Señal de interrupción interactiva.",
+    "proto": "#define SIGINT ...",
+    "example": "signal(SIGINT, SIG_IGN); // Ignorar interrupción"
+   },
+   {
+    "name": "SIGILL",
+    "catLabel": "Señales",
+    "desc": "Instrucción ilegal",
+    "fullDesc": "Señal enviada cuando se intenta ejecutar una instrucción no válida.",
+    "proto": "#define SIGILL ...",
+    "example": ""
+   },
+   {
+    "name": "SIGABRT",
+    "catLabel": "Señales",
+    "desc": "Terminación anormal",
+    "fullDesc": "Señal enviada por la función abort().",
+    "proto": "#define SIGABRT ...",
+    "example": "raise(SIGABRT);"
+   },
+   {
+    "name": "SIGFPE",
+    "catLabel": "Señales",
+    "desc": "Error aritmético",
+    "fullDesc": "Señal enviada ante errores como división por cero o desbordamiento de punto flotante.",
+    "proto": "#define SIGFPE ...",
+    "example": ""
+   },
+   {
+    "name": "SIGSEGV",
+    "catLabel": "Señales",
+    "desc": "Acceso inválido a memoria",
+    "fullDesc": "Señal de fallo de segmentación ante accesos de memoria no permitidos.",
+    "proto": "#define SIGSEGV ...",
+    "example": ""
+   },
+   {
+    "name": "SIGTERM",
+    "catLabel": "Señales",
+    "desc": "Solicitud de terminación",
+    "fullDesc": "Señal de terminación enviada al programa (solicitud suave).",
+    "proto": "#define SIGTERM ...",
+    "example": ""
+   },
+   {
+    "name": "SIG_DFL",
+    "catLabel": "Señales",
+    "desc": "Acción por defecto",
+    "fullDesc": "Macro que representa el manejador de señal predeterminado del sistema.",
+    "proto": "#define SIG_DFL ...",
+    "example": "signal(SIGINT, SIG_DFL);"
+   },
+   {
+    "name": "SIG_IGN",
+    "catLabel": "Señales",
+    "desc": "Ignorar señal",
+    "fullDesc": "Macro que indica que la señal debe ser ignorada.",
+    "proto": "#define SIG_IGN ...",
+    "example": "signal(SIGTERM, SIG_IGN);"
+   },
+   {
+    "name": "SIG_ERR",
+    "catLabel": "Señales",
+    "desc": "Error en signal",
+    "fullDesc": "Valor devuelto por signal() si ocurre un error al registrar el manejador.",
+    "proto": "#define SIG_ERR ...",
+    "example": "if (signal(SIGINT, manejador) == SIG_ERR) perror(\"signal\");"
+   }
+  ]
+ },
+ {
+  "h": "setjmp",
+  "g": "Errores y control",
+  "sub": "Referencia completa de funciones de saltos no locales de la biblioteca estándar de C",
+  "fns": [
+   {
+    "name": "setjmp",
+    "catLabel": "Saltos",
+    "desc": "Guarda el entorno actual para un salto posterior",
+    "fullDesc": "Macro que guarda el entorno de ejecución actual (incluyendo el puntero de instrucción y el puntero de pila) en el buffer jmp_buf. Devuelve 0 cuando se llama directamente, y un valor distinto de 0 si se regresa a través de longjmp.",
+    "proto": "int setjmp(jmp_buf env);",
+    "example": "#include <stdio.h>\n#include <setjmp.h>\n\njmp_buf entorno;\n\nvoid subrutina() {\n    printf(\"Dentro de subrutina\\n\");\n    longjmp(entorno, 1);\n}\n\nint main(void) {\n    if (setjmp(entorno) == 0) {\n        printf(\"Entorno guardado, llamando subrutina\\n\");\n        subrutina();\n    } else {\n        printf(\"Regresamos al main vía longjmp\\n\");\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "longjmp",
+    "catLabel": "Saltos",
+    "desc": "Restaura un entorno guardado previamente",
+    "fullDesc": "Restaura el entorno guardado en el buffer env por una llamada previa a setjmp. El programa continúa su ejecución como si setjmp hubiera devuelto el valor val.",
+    "proto": "void longjmp(jmp_buf env, int val);",
+    "example": "#include <stdio.h>\n#include <setjmp.h>\n\njmp_buf env;\n\nint main(void) {\n    int val = setjmp(env);\n    if (val == 0) {\n        printf(\"Inicio\\n\");\n        longjmp(env, 42);\n    } else {\n        printf(\"Saltó con valor: %d\\n\", val);\n    }\n    return 0;\n}"
+   },
+   {
+    "name": "jmp_buf",
+    "catLabel": "Saltos",
+    "desc": "Tipo de array para guardar el contexto de ejecución",
+    "fullDesc": "Es un tipo de array capaz de almacenar la información necesaria para restaurar un entorno de ejecución. Se pasa por referencia a setjmp y longjmp.",
+    "proto": "typedef /* definido por la implementación */ jmp_buf;",
+    "example": "#include <setjmp.h>\n\njmp_buf buffer_de_contexto;\n\n// Se usa para declarar variables que guardarán el estado de la CPU."
+   }
+  ]
+ },
+ {
+  "h": "stdarg",
+  "g": "Errores y control",
+  "sub": "Referencia completa de macros para argumentos variables de la biblioteca estándar de C",
+  "fns": [
+   {
+    "name": "va_list",
+    "catLabel": "Argumentos",
+    "desc": "Tipo para almacenar la información de los argumentos variables",
+    "fullDesc": "Tipo de objeto adecuado para contener la información necesaria para las macros va_start, va_arg, va_copy y va_end.",
+    "proto": "typedef /* definido por la implementación */ va_list;",
+    "example": "#include <stdarg.h>\n\nvoid mi_funcion(int n, ...) {\n    va_list args;\n    // ...\n}"
+   },
+   {
+    "name": "va_start",
+    "catLabel": "Argumentos",
+    "desc": "Inicia el acceso a los argumentos variables",
+    "fullDesc": "Macro que inicializa el objeto va_list para recuperar los argumentos variables que siguen al parámetro last.",
+    "proto": "void va_start(va_list ap, last);",
+    "example": "#include <stdio.h>\n#include <stdarg.h>\n\nvoid imprimir_enteros(int n, ...) {\n    va_list ap;\n    va_start(ap, n);\n    for (int i = 0; i < n; i++) {\n        printf(\"%d \", va_arg(ap, int));\n    }\n    va_end(ap);\n}"
+   },
+   {
+    "name": "va_arg",
+    "catLabel": "Argumentos",
+    "desc": "Recupera el siguiente argumento variable",
+    "fullDesc": "Macro que se expande a una expresión con el valor y tipo del siguiente argumento en la lista. El parámetro type es el nombre del tipo del argumento a recuperar.",
+    "proto": "type va_arg(va_list ap, type);",
+    "example": "#include <stdarg.h>\n\n// Ejemplo de uso dentro de una función variádica:\n// int valor = va_arg(ap, int);\n// double d = va_arg(ap, double);"
+   },
+   {
+    "name": "va_copy",
+    "catLabel": "Argumentos",
+    "desc": "Copia una lista de argumentos variables",
+    "fullDesc": "Macro que inicializa dest como una copia del estado actual de src. Es útil si se necesita recorrer la misma lista de argumentos más de una vez.",
+    "proto": "void va_copy(va_list dest, va_list src);",
+    "example": "#include <stdarg.h>\n\nvoid duplicar_lista(va_list original) {\n    va_list copia;\n    va_copy(copia, original);\n    // usar copia\n    va_end(copia);\n}"
+   },
+   {
+    "name": "va_end",
+    "catLabel": "Argumentos",
+    "desc": "Finaliza el acceso a los argumentos variables",
+    "fullDesc": "Macro que realiza la limpieza necesaria del objeto va_list después de haber recuperado los argumentos.",
+    "proto": "void va_end(va_list ap);",
+    "example": "#include <stdarg.h>\n\n// Siempre llamar a va_end antes de salir de la función\n// que llamó a va_start o va_copy."
+   }
+  ]
+ }
+]
